@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-09T15:13:16.401271+00:00",
+  "title": "Design System: Entre areias e mar",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Carvão azul"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta clara"
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Plano editorial"
+      },
+      "stage-paper": {
+        "role": "neutral",
+        "displayName": "Superfície do palco"
+      },
+      "stage-ink": {
+        "role": "neutral",
+        "displayName": "Tinta do palco"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Abertura",
+        "purpose": "Título principal em Barlow."
+      },
+      "body": {
+        "displayName": "Leitura",
+        "purpose": "Texto editorial em Spectral; Arial continua nos utilitários."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "historical-camera",
+        "value": "850ms; 1 - (1 - t)^3",
+        "purpose": "Voo histórico e cidade, teclado e clique; destino direto quando reduzido."
+      },
+      {
+        "name": "replay",
+        "value": "400ms; 1 - (1 - t)^4",
+        "purpose": "Abertura e troca de alternativa; sem autoloop."
+      },
+      {
+        "name": "button",
+        "value": "transform .2s ease, filter .2s ease",
+        "purpose": "Hover de ponteiro fino: -2px e brightness(1.08)."
+      },
+      {
+        "name": "scene",
+        "value": "opacity .25s ease-out",
+        "purpose": "Alternar Terra/fotografia."
+      },
+      {
+        "name": "backdrop",
+        "value": "opacity .35s ease-out",
+        "purpose": "Opacidade da fotografia contextual."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile-max",
+        "value": "600px"
+      },
+      {
+        "name": "tablet-min",
+        "value": "601px"
+      },
+      {
+        "name": "compact-max",
+        "value": "900px"
+      },
+      {
+        "name": "tablet-max",
+        "value": "1050px"
+      },
+      {
+        "name": "wide-min",
+        "value": "1800px"
+      }
+    ],
+    "focus": {
+      "value": "3px solid #c46a30",
+      "offset": "4px",
+      "targets": "button, a, select :focus-visible"
+    },
+    "depth": {
+      "earthOpacity": 0.92,
+      "edgeFade": "smoothstep(0.02, 0.48, abs(dot(normalize(vNormal), normalize(vViewPosition))))",
+      "atmosphere": "vec4(0.30,0.55,0.84,rim*0.32)",
+      "journeyShade": "linear-gradient(90deg,rgba(12,23,32,.93),rgba(12,23,32,.58) 48%,rgba(12,23,32,.2))",
+      "journeyShadeMobile": "linear-gradient(180deg,#0c1720e8,#0c1720aa 48%,#0c17204d)",
+      "photoOpacity": 0.65,
+      "photoModeOpacity": 1
+    },
+    "evidence": {
+      "sources": [
+        "main.js",
+        "style.css",
+        "scene.js",
+        "PRODUCT.md",
+        "package.json",
+        "events.json"
+      ],
+      "screenshots": [
+        "/private/tmp/mari-review/final-intro.png",
+        "/private/tmp/mari-review/final-desktop.png",
+        "/private/tmp/mari-review/final-tablet.png",
+        "/private/tmp/mari-review/final-mobile.png",
+        "/private/tmp/mari-review/final-reading.png"
+      ],
+      "validation": "Leitura do código e inspeção das cinco capturas fornecidas; sem nova execução funcional. final-reading.png ainda mostra o palco.",
+      "status": "Escolha definitiva aberta; padrão v=1; revisão acadêmica pendente.",
+      "notCanonized": [
+        "Créditos 8–9px e datas pequenas.",
+        "Eyebrow sob a marca.",
+        "Tokens verdes/bege sobrescritos e sombra/blur antigos do comparador.",
+        "Estado de leitura não limpo ao voltar à abertura; modo fotografia persiste entre marcos.",
+        "Redução manual só afeta JS; preferência do sistema sem listener.",
+        "Falhas de texturas sem fallback equivalente ao WebGL."
+      ],
+      "reason": "Registro documental exclusivo; revisão por outro agente; código preservado.",
+      "tonalRamps": "Omitidas: não há escala tonal implementada; não inventar tokens para preencher o painel.",
+      "snippetScope": "Amostras estáticas autônomas de aparência; sem runtime de navegação. Foco copiado; hover/active não inventados onde ausentes. Fontes seguem famílias do projeto."
+    }
+  },
+  "components": [
+    {
+      "name": "Ação principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Inversão dos tokens locais do palco; texto sincronizado com o avanço.",
+      "html": "<div class=\"ds-root\"><button class=\"ds-primary\">Continuar a viagem</button></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-primary{background:var(--ink,#f8f5f0);color:var(--paper,#202329)!important;border:0;border-radius:50px;padding:17px 23px;font-size:13px;transition:transform .2s ease,filter .2s ease}@media(hover:hover) and (pointer:fine){.ds-primary:hover{transform:translateY(-2px);filter:brightness(1.08)}}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    },
+    {
+      "name": "Ação secundária",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ação de leitura com filete; sem hover customizado no código.",
+      "html": "<div class=\"ds-root\"><button class=\"ds-secondary\">Entender este marco</button></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-secondary{background:none;border:0;border-bottom:1px solid #ffffff70;min-height:44px;padding:8px 0;font-size:12px;margin:12px 18px 0 0} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    },
+    {
+      "name": "Navegação histórica",
+      "kind": "nav",
+      "refersTo": "navigation-button",
+      "description": "Extremos desabilitados; sem hover customizado na fonte.",
+      "html": "<div class=\"ds-root\"><nav aria-label=\"Navegação histórica\"><button class=\"ds-nav\" disabled>Anterior</button> <button class=\"ds-nav\">Próximo marco</button></nav></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-nav{border:1px solid #8886;background:transparent;border-radius:40px;min-height:44px;padding:0 20px;font-size:12px;white-space:nowrap} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    },
+    {
+      "name": "Seleção histórica",
+      "kind": "nav",
+      "refersTo": "timeline-current",
+      "description": "Estado atual fiel. Datas pequenas reproduzidas como evidência, não token recomendado.",
+      "html": "<div class=\"ds-root\"><nav aria-label=\"Marcos\"><button class=\"ds-event\" aria-current=\"true\"><span>1</span><small>639–642</small></button><button class=\"ds-event\"><span>2</span><small>c. 756</small></button></nav></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-event{border:0;background:transparent;min-width:62px;padding:8px 4px}.ds-event span{display:block;font-family:Spectral,serif;font-size:20px}.ds-event small{display:block;margin-top:9px;font-size:9px}.ds-event[aria-current=true]{background:var(--ink,#f2efe9);color:var(--paper,#192127)!important;border-radius:4px} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    },
+    {
+      "name": "Escolha de fotografia",
+      "kind": "chip",
+      "refersTo": "photo-chip",
+      "description": "Seleção regional com inversão cromática; sem hover customizado.",
+      "html": "<div class=\"ds-root\"><button class=\"ds-photo\" aria-pressed=\"true\">Kilwa</button> <button class=\"ds-photo\" aria-pressed=\"false\">Cairo</button></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-photo{min-height:44px;padding:0 18px;border:1px solid #7776;background:transparent;border-radius:30px;font-size:12px}.ds-photo[aria-pressed=true]{background:var(--ink,#f2efe9);color:var(--paper,#192127)!important} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    },
+    {
+      "name": "Cidade localizável",
+      "kind": "button",
+      "refersTo": "city",
+      "description": "Amostra do botão; projeção e voo dependem do atlas, não simulados pelo snippet.",
+      "html": "<div class=\"ds-root\"><button class=\"ds-city\" aria-label=\"Localizar Cairo\">Cairo</button></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-city{border:1px solid #ffffff35;background:#14202ade;color:#f5eee2!important;font-size:11px;padding:8px 12px;border-radius:3px;white-space:nowrap;max-width:140px;min-height:36px}@media(max-width:1050px){.ds-city{min-height:44px}} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    },
+    {
+      "name": "Alternativas no mobile",
+      "kind": "input",
+      "refersTo": "comparator-select",
+      "description": "Select nativo exibido no comparador mobile; sem estados artificiais.",
+      "html": "<div class=\"ds-root\"><select class=\"ds-select\" aria-label=\"Escolher alternativa\"><option>1. Horizonte africano</option><option>2. Atlas noturno</option><option>3. Pedra e memória</option><option>4. Areia e mar</option><option>5. Mesa cartográfica</option><option>6. Caderno de campo</option><option>7. Rede de cidades</option><option>8. Marés do Índico</option><option>9. Galeria do tempo</option><option>10. Linhas de poder</option></select></div>",
+      "css": ".ds-root{font-family:Arial,sans-serif;color:var(--ink,#f2efe9)}.ds-root button,.ds-root select{font-family:Arial,sans-serif;cursor:pointer;color:inherit}.ds-select{background:#141c22;color:#f6f5f2!important;border:1px solid #fff5;border-radius:6px;max-width:230px;min-height:44px;padding:8px;font-size:12px} .ds-root button:focus-visible,.ds-root select:focus-visible{outline:3px solid #c46a30;outline-offset:4px}.ds-root button:disabled{opacity:.35;cursor:default}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Narrativa africana guiada",
+    "overview": "Uma narrativa africana guiada: o argumento histórico ocupa o primeiro plano, a Terra estabelece relações espaciais e as fotografias atuais contextualizam regiões. A paisagem de dunas dá presença à abertura; carvão e azul-noite sustentam a continuidade até leitura, bibliografia e rodapé. A autoria de Mariana Rodrigues Fernandes permanece visível.\n\nEste registro descreve a implementação atual, não uma aprovação definitiva. Horizonte africano é a abertura padrão (`v=1`); a escolha final entre dez alternativas permanece aberta. As rejeições confirmadas são branco vazio, verde/bege como direção dominante e mapa estilizado como representação principal. Não houve comp ou seed retroativo; nenhum é alegado ou exigido aqui.",
+    "keyCharacteristics": [
+      "Terra realista com bordas transparentes e cidades localizáveis.",
+      "Três fotografias regionais creditadas e uma ilustração de dunas identificada como IA.",
+      "Narrativa, leitura e fontes na mesma continuidade escura.",
+      "Navegação histórica em linha própria do viewport; comparador secundário oculto."
+    ],
+    "rules": [
+      {
+        "name": "Continuidade editorial",
+        "body": "Abertura, leitura e fontes compartilham superfícies escuras; a cor descritiva vem das fotografias e da Terra.",
+        "section": "colors"
+      },
+      {
+        "name": "Duas vozes editoriais",
+        "body": "Barlow conduz os grandes títulos; Spectral acompanha subtítulos e leitura. Arial atende aos controles e textos utilitários existentes.",
+        "section": "typography"
+      },
+      {
+        "name": "Profundidade geográfica",
+        "body": "A profundidade vem da Terra, da transparência e da fotografia; gradientes de proteção de texto e atmosfera pertencem a este mundo.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do manter autoria, créditos, distinção entre imagem contextual e evidência histórica e acesso à bibliografia.",
+      "Do preservar a navegação histórica em linha própria, a seleção atual e o comparador inicialmente oculto.",
+      "Do manter o mesmo caminho de navegação histórica para teclado e clique, incluindo a câmera de 850 ms quando o movimento completo está ativo.",
+      "Do respeitar movimento reduzido e preservar a leitura quando o 3D estiver indisponível."
+    ],
+    "donts": [
+      "Don't restaurar branco vazio ou verde/bege como paleta dominante; os tons naturais nas imagens continuam legítimos.",
+      "Don't apresentar fotografias atuais, dunas de IA ou rotas esquemáticas como reconstituições medievais.",
+      "Don't transformar a câmera histórica de 850 ms em duração padrão de controles ou criar movimento contínuo automático.",
+      "Don't declarar alternativa definitiva, aprovação acadêmica, comp ou seed que não foram realizados."
+    ]
+  }
+}

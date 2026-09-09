@@ -1,0 +1,47 @@
+[
+  {
+    "key": "kilwa",
+    "title": "Kilwa, cidade de coral.",
+    "place": "Kilwa",
+    "date": "Fotografia de 2016",
+    "event": 6,
+    "alt": "Arcos de alvenaria e coral nas ruínas da Grande Mesquita de Kilwa Kisiwani.",
+    "text": "As ruínas tornam materiais as relações entre vida religiosa, trabalho e espaço urbano. A fotografia registra o sítio em 2016; não reconstitui sua aparência medieval.",
+    "author": "Janetmpurdy",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Great_Mosque_Kilwa_Kisiwani_Tanzania.jpg",
+    "width": 1086,
+    "height": 724
+  },
+  {
+    "key": "cairo",
+    "title": "O Cairo, cidade de encontros.",
+    "place": "Cairo",
+    "date": "Fotografia de 2007",
+    "event": 3,
+    "alt": "Pátio de mármore de al-Azhar com arcadas, minaretes e uma pessoa caminhando.",
+    "text": "O pátio de al-Azhar permite observar um patrimônio que atravessou sucessivas reformas. Sua aparência em 2007 não deve ser confundida com a mesquita fatímida de 972.",
+    "author": "Vyacheslav Argenberg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:The_Courtyard_of_Al-Azhar_Mosque,_Cairo,_Egypt.jpg",
+    "width": 3072,
+    "height": 2048
+  },
+  {
+    "key": "timbuktu",
+    "title": "Timbuctu, arquitetura e memória.",
+    "place": "Timbuctu",
+    "date": "Fotografia de 2001",
+    "event": 9,
+    "alt": "Mesquita de Djinguereber em Timbuctu, com paredes de terra, minarete e pessoas no entorno.",
+    "text": "A arquitetura de terra preserva histórias de culto, conhecimento e manutenção coletiva. Esta fotografia de Djinguereber, feita em 2001, é um registro posterior ao período estudado.",
+    "author": "upyernoz",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Djinguereber_in_Timbuktu.jpg",
+    "width": 2796,
+    "height": 1804
+  }
+]

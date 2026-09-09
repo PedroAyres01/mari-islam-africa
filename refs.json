@@ -1,0 +1,92 @@
+{
+  "hga": {
+    "title": "História Geral da África, volumes III e IV",
+    "author": "UNESCO. Vol. III, org. M. El Fasi e I. Hrbek; vol. IV, org. D. T. Niane.",
+    "url": "https://www.unesco.org/en/general-history-africa",
+    "note": "Panorama do recorte: séculos VII–XI e XII–XVI. Consultar os capítulos regionais na edição utilizada."
+  },
+  "islam": {
+    "title": "The History of Islam in Africa",
+    "author": "LEVTZION, Nehemia; POUWELS, Randall L. (org.). Ohio University Press, 2000.",
+    "url": "https://www.ohioswallow.com/9780821412978/the-history-of-islam-in-africa/",
+    "note": "Referência de aprofundamento para diferenças regionais, conversão e instituições."
+  },
+  "gold": {
+    "title": "The Trans-Saharan Gold Trade (7th–14th Century)",
+    "author": "Department of the Arts of Africa, Oceania, and the Americas. The Metropolitan Museum of Art, 2000.",
+    "url": "https://www.metmuseum.org/essays/the-trans-saharan-gold-trade-7th-14th-century",
+    "note": "Síntese museológica sobre ouro, circulação e poderes sahelianos."
+  },
+  "ghana": {
+    "title": "The Conquest That Never Was: Ghana and the Almoravids, 1076",
+    "author": "CONRAD, David C.; FISHER, Humphrey J. History in Africa, partes I (1982) e II (1983).",
+    "url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/conquest-that-never-was-ghana-and-the-almoravids-1076-i-the-external-arabic-sources/4C43B158FD3D74BE744D8634781A4E0A",
+    "note": "Debate historiográfico: a conquista de Gana em 1076 não deve ser tratada como fato consensual."
+  },
+  "kilwa": {
+    "title": "Ruins of Kilwa Kisiwani and Ruins of Songo Mnara",
+    "author": "UNESCO World Heritage Centre.",
+    "url": "https://whc.unesco.org/en/list/144/",
+    "note": "Patrimônio e evidência material: comércio oceânico, mesquitas e arquitetura de coral."
+  },
+  "timbuktu": {
+    "title": "Timbuktu",
+    "author": "UNESCO World Heritage Centre.",
+    "url": "https://whc.unesco.org/en/list/119/",
+    "note": "Patrimônio urbano, mesquitas e centralidade intelectual nos séculos XV e XVI."
+  },
+  "atlas": {
+    "title": "L’Atlas catalan",
+    "author": "Bibliothèque nationale de France. Manuscrits, Espagnol 30.",
+    "url": "https://essentiels.bnf.fr/fr/article/ade6953c-716d-4ca3-b1a8-f4d7a46e678d-atlas-catalan",
+    "note": "Documento cartográfico para discutir a representação mediterrânica do Mali. Data convencional: 1375."
+  },
+  "corpus": {
+    "title": "Corpus of Early Arabic Sources for West African History",
+    "author": "LEVTZION, Nehemia; HOPKINS, J. F. P. (org.). Cambridge University Press, 1981.",
+    "url": null,
+    "note": "Leitura complementar: confrontar as traduções e distinguir observação direta de informação transmitida."
+  },
+  "horn": {
+    "title": "Horn and Crescent: Cultural Change and Traditional Islam on the East African Coast, 800–1900",
+    "author": "POUWELS, Randall L. Cambridge University Press, 1987.",
+    "url": null,
+    "note": "Leitura complementar sobre as sociedades muçulmanas da costa oriental."
+  },
+  "niane": {
+    "title": "Soundjata ou l’épopée mandingue",
+    "author": "NIANE, Djibril Tamsir. Présence Africaine, 1960.",
+    "url": null,
+    "note": "Reelaboração escrita de uma tradição oral; não é uma transcrição contemporânea do século XIII."
+  },
+  "shanga": {
+    "title": "Shanga: The Archaeology of a Muslim Trading Community on the Coast of East Africa",
+    "author": "HORTON, Mark. British Institute in Eastern Africa, 1996.",
+    "url": "https://research-information.bris.ac.uk/en/publications/shangaan-early-muslim-trading-community-on-the-coast-of-eastern-a/",
+    "note": "Referência arqueológica para aprofundamento. O link é o registro bibliográfico institucional, não o texto integral."
+  },
+  "maritime": {
+    "title": "When Did the Swahili Become Maritime?",
+    "author": "FLEISHER, Jeffrey et al. American Anthropologist, 117(1), 2015, p. 100–115.",
+    "url": "https://doi.org/10.1111/aman.12171",
+    "note": "Artigo sobre mudanças graduais nas relações das sociedades suaílis com o mar; contrapõe uma identidade marítima fixa."
+  },
+  "cairo": {
+    "title": "Historic Cairo",
+    "author": "UNESCO World Heritage Centre.",
+    "url": "https://whc.unesco.org/en/list/89/",
+    "note": "Registro patrimonial sobre a fundação fatímida e o espaço urbano."
+  },
+  "azhar": {
+    "title": "About Al-Azhar Mosque",
+    "author": "Al-Azhar Mosque, portal institucional.",
+    "url": "https://azhar.eg/en/Al-Azhar-Mosque/Mosque-News/ArtMID/9560/ArticleID/46011/About-Al-Azhar-Mosque",
+    "note": "História institucional: construção em 970–972. A perspectiva institucional também exige leitura crítica."
+  },
+  "hunwick": {
+    "title": "Timbuktu and the Songhay Empire: Al-Saʿdī’s Taʾrīkh al-sūdān down to 1613 and Other Contemporary Documents",
+    "author": "HUNWICK, John O. Brill, 1999.",
+    "url": "https://www.degruyterbrill.com/document/isbn/9789004491137/html?lang=de",
+    "note": "Edição e estudo de uma crônica do século XVII sobre acontecimentos anteriores; consultar o capítulo e a edição usados antes da entrega."
+  }
+}
