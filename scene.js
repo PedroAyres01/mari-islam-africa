@@ -31,7 +31,7 @@ export async function createAtlas(host){
  const marcoProfiles=[{z:8.2,fov:34,tilt:0.02},{z:8.6,fov:38,tilt:0.04},{z:8.4,fov:36,tilt:0.02},{z:7.9,fov:32,tilt:0.01},{z:8.5,fov:37,tilt:0.03},{z:8.3,fov:35,tilt:0.02},{z:8.1,fov:33,tilt:0.03},{z:7.7,fov:30,tilt:0},{z:8.5,fov:36,tilt:0.02},{z:8.3,fov:35,tilt:0.03}];
  const land=await fetch('./assets/land.json').then(r=>r.json()).catch(()=>null);
  const map=(dark=false)=>{const c=document.createElement('canvas');c.width=2048;c.height=1024;const x=c.getContext('2d');x.fillStyle=dark?'#142932':'#dbe2d4';x.fillRect(0,0,c.width,c.height);x.strokeStyle=dark?'#43605e':'#bdcbbb';x.lineWidth=1;for(let i=0;i<=24;i++){x.beginPath();x.moveTo(i*c.width/24,0);x.lineTo(i*c.width/24,c.height);x.stroke();}for(let i=0;i<=12;i++){x.beginPath();x.moveTo(0,i*c.height/12);x.lineTo(c.width,i*c.height/12);x.stroke();}x.fillStyle=dark?'#728676':'#778f74';for(const f of land?.features||[]){const polys=f.geometry.type==='MultiPolygon'?f.geometry.coordinates:[f.geometry.coordinates];for(const p of polys){x.beginPath();for(const ring of p){ring.forEach(([lon,lat],i)=>{const px=(lon+180)/360*c.width,py=(90-lat)/180*c.height;i?x.lineTo(px,py):x.moveTo(px,py);});x.closePath();}x.fill('evenodd');}}const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;textures.push(t);return t;};
- const paleMap=map(),darkMap=map(true),loader=new THREE.TextureLoader();const photos=await Promise.all(['kilwa','cairo','timbuktu'].map(n=>loader.loadAsync('./assets/'+n+'.jpg').then(t=>{t.colorSpace=THREE.SRGBColorSpace;textures.push(t);return t;}).catch(()=>null)));
+ const paleMap=map(),darkMap=map(true),loader=new THREE.TextureLoader();const photos=await Promise.all(['kilwa','era700','timbuktu'].map(n=>loader.loadAsync('./assets/'+n+'.jpg').then(t=>{t.colorSpace=THREE.SRGBColorSpace;textures.push(t);return t;}).catch(()=>null)));
  const earth=await loader.loadAsync('./assets/earth-color.jpg');earth.colorSpace=THREE.SRGBColorSpace;earth.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());const normal=await loader.loadAsync('./assets/earth-normal.jpg'),specular=await loader.loadAsync('./assets/earth-specular.jpg');textures.push(earth,normal,specular);
  function mesh(geo,color,opts={}){const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color,roughness:.7,...opts}));group.add(m);return m;}
  function line(points,color,r=.012){return mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points),80,r,8,false),color,{metalness:.1});}
@@ -51,16 +51,28 @@ export async function createAtlas(host){
  else if(v===5){for(let i=0;i<7;i++){const p=mesh(new THREE.BoxGeometry(2.8,.04,3.5),i%2?0xe4d3ad:0xfff3d6);p.rotation.y=(i-3)*.13;p.position.y=i*.09;}group.rotation.set(.8,.2,-.25);}
  else if(v===6){const points=Array.from({length:12},(_,i)=>new THREE.Vector3(Math.cos(i*2.4)*2.9,Math.sin(i*2.4)*1.15,Math.sin(i)*.8));points.forEach((p,i)=>{const n=mesh(new THREE.SphereGeometry(i===selected?.15:.09,24,16),i%3===0?0xc9b67c:0xa7c9bc);n.position.copy(p);if(i>0)line([points[Math.floor((i-1)/2)],p],0x648c88,.012);});group.position.y=-.35;}
  else if(v===7){const geo=new THREE.PlaneGeometry(12,7,140,80),p=geo.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i);p.setZ(i,Math.sin(x*1.2+y)*.17+Math.cos(y*2-x*.6)*.12);}geo.computeVertexNormals();const ocean=mesh(geo,0x556b7d,{metalness:.15,roughness:.55,side:THREE.DoubleSide,transparent:true,opacity:.8});ocean.rotation.x=-1.1;group.rotation.z=-.1;group.position.set(.5,-.5,0);for(let j=0;j<3;j++)line([new THREE.Vector3(-3,-.3+j*.5,.8),new THREE.Vector3(0,.4+j*.4,1.15),new THREE.Vector3(3,.8+j*.3,.7)],0xd8d4c7,.016);}
- else if(v===8){const p=mesh(new THREE.PlaneGeometry(4.8,3.2),0xffffff,{map:photos[Math.max(0,selected)%3],side:THREE.DoubleSide});p.rotation.y=-.12;camera.position.z=8;group.position.y=.15;}
+ else if(v===8){const photo=photos[Math.max(0,selected)%3]||photos.find(x=>x);if(photo){const p=mesh(new THREE.PlaneGeometry(4.8,3.2),0xffffff,{map:photo,side:THREE.DoubleSide});p.rotation.y=-.12;}camera.position.z=8;group.position.y=.15;}
  else{const colors=[0x964833,0x365a60,0x9a823a];for(let j=0;j<3;j++){const pts=Array.from({length:8},(_,i)=>new THREE.Vector3((i-3.5)*.8,Math.sin(i*.8+j)*.48+(j-1)*1.15,Math.cos(i*.5+j)*.6));line(pts,colors[j],.065);pts.forEach((p,i)=>{const dot=mesh(new THREE.SphereGeometry(i===selected%8?.16:.095,20,12),colors[j]);dot.position.copy(p);});}group.rotation.set(.1,-.35,.38);}
  }
  function size(){const r=host.getBoundingClientRect();if(!r.width||!r.height)return;renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();render();}
- function updateCinema(){const t=clock.getElapsedTime();starMat.uniforms.uTime.value=t;dustMat.uniforms.uTime.value=t;armGroup.rotation.y=t*0.014;armGroup.rotation.z=Math.sin(t*0.11)*0.02;stars.rotation.y=t*0.0035;stars.rotation.x=t*0.0012;
+ function updateCinema(){
+  if(reduced){
+    // Static state under reduced motion: snap camera to target, freeze twinkle/dust/rotation
+    starMat.uniforms.uTime.value=0;
+    dustMat.uniforms.uTime.value=0;
+    camera.position.set(0,0,camTargetZ);
+    if(Math.abs(camTargetFov-camera.fov)>0.01){camera.fov=camTargetFov;camera.updateProjectionMatrix();}
+    camPan.x=0;camPan.y=0;
+    camera.lookAt(0,0,0);
+    return;
+  }
+  const t=clock.getElapsedTime();starMat.uniforms.uTime.value=t;dustMat.uniforms.uTime.value=t;armGroup.rotation.y=t*0.014;armGroup.rotation.z=Math.sin(t*0.11)*0.02;stars.rotation.y=t*0.0035;stars.rotation.x=t*0.0012;
   // Camera breathe + smooth pan easing (parallax)
   const breatheZ=Math.sin(t*0.42)*0.055;const targetZ=camTargetZ+breatheZ;camera.position.z+=(targetZ-camera.position.z)*0.06;
   camPan.x+=(camTargetPan.x-camPan.x)*0.05;camPan.y+=(camTargetPan.y-camPan.y)*0.05;camera.position.x=camPan.x;camera.position.y=camPan.y;
   const fovDelta=(camTargetFov-camera.fov);if(Math.abs(fovDelta)>0.01){camera.fov+=fovDelta*0.06;camera.updateProjectionMatrix();}
-  camera.lookAt(0,camPan.y*0.15,0);}
+  camera.lookAt(0,camPan.y*0.15,0);
+}
  function tick(){updateCinema();render();tickHandle=requestAnimationFrame(tick);}
  function render(){renderer.render(scene,camera);group.updateMatrixWorld();const rect=host.getBoundingClientRect(),placed=[];labels.forEach(l=>{const world=l.point.clone().applyMatrix4(group.matrixWorld),p=world.clone().project(camera),x=(p.x*.5+.5)*rect.width,y=(-p.y*.5+.5)*rect.height;let visible=world.z>group.position.z&&Math.abs(p.x)<.8&&Math.abs(p.y)<.9;if(placed.some(pos=>Math.abs(pos.x-x)<120&&Math.abs(pos.y-y)<44))visible=false;l.el.hidden=!visible;if(visible){placed.push({x,y});l.el.style.transform=`translate(${x}px,${y}px) translate(10px,-50%)`;}});}
  function fly(lon,lat,r=false){cancelAnimationFrame(frame);const from=group.rotation.clone(),targetX=THREE.MathUtils.degToRad(lat),targetY=-Math.PI/2-THREE.MathUtils.degToRad(lon);const start=performance.now();function tick(now){const t=r?1:Math.min(1,(now-start)/850),ease=1-Math.pow(1-t,3);group.rotation.set(THREE.MathUtils.lerp(from.x,targetX,ease),THREE.MathUtils.lerp(from.y,targetY,ease),THREE.MathUtils.lerp(from.z,0,ease));routes.forEach(route=>route.geometry.setDrawRange(0,Math.floor(route.geometry.index.count*ease/3)*3));host.dataset.travel=t<1?'moving':'complete';render();if(t<1)frame=requestAnimationFrame(tick);}frame=requestAnimationFrame(tick);}

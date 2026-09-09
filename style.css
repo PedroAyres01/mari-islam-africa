@@ -692,3 +692,20 @@ body[data-material="procedural"] .journey-backdrop { filter: none; }
 /* Drop cap float clear — prevent doc figure from squeezing beside it */
 .reading-cinema .reading-body #paragraph { overflow: hidden; }
 .reading-doc, .reading-cinema #evidence { clear: both; width: 100%; }
+
+/* ============================================================
+ * REDUCED MOTION — when user toggles the motion button OR the
+ * system pref is set, kill all animations that go beyond a
+ * single tween. The static state stays legible and calm.
+ * ============================================================ */
+body.cinema-reduced .cinema-grain,
+body.cinema-reduced .cinema-constellations,
+body.cinema-reduced .cinema-silhouette,
+body.cinema-reduced .marker.signature .halo,
+body.cinema-reduced .route,
+body.cinema-reduced .landing-hero { animation: none !important; }
+body.cinema-reduced *,
+body.cinema-reduced *::before,
+body.cinema-reduced *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+body.cinema-reduced .cinema-grain { opacity: 0.08; }
+body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }

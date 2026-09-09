@@ -529,5 +529,28 @@ export function createCinema({stageHost, sceneEl}) {
     }
   }
 
-  return {onMarco, onReset, onDesignChange, initReading, onReadingMarco};
+  function setReduced(next) {
+    reduced = next;
+    document.documentElement.dataset.reducedMotion = next ? 'on' : 'off';
+    // Freeze/unfreeze CSS animations by adding a marker class
+    document.body.classList.toggle('cinema-reduced', next);
+    // Kill any in-flight GSAP animations for the cinema elements
+    if (next) {
+      gsap.killTweensOf([letterTop, letterBot, timecode, credit, silhouettes, constellations]);
+      // Snap letterbox to permanent state
+      gsap.set([letterTop, letterBot], {height: 18});
+      // Ensure credit is hidden and silhouettes visible
+      gsap.set(credit, {opacity: 0});
+      if (credit) credit.hidden = true;
+      gsap.set(silhouettes, {opacity: 0.6});
+      // Stop reading-canvas particle loop
+      if (readingRAF) { cancelAnimationFrame(readingRAF); readingRAF = null; }
+      // Draw one static frame
+      if (readingCanvas) readingTick(0);
+    } else if (readingCanvas && !readingRAF) {
+      startReadingLoop();
+    }
+  }
+
+  return {onMarco, onReset, onDesignChange, initReading, onReadingMarco, setReduced};
 }
