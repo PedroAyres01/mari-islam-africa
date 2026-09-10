@@ -1270,3 +1270,21 @@ body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }
 
 /* Chapter card entering the viewport gets its own fade-up */
 .reading-chapter-inner { transition: opacity 400ms ease, transform 400ms ease; }
+
+/* ============================================================
+ * FIX: parallax overflow bug
+ * Silhuetas + copy + caption transbordavam pra fora do palco
+ * quando parallax movia. Voltar overflow:hidden mantém tudo
+ * clipado ao palco. Parallax funciona igual, elementos somem
+ * ao passar dos limites em vez de flutuar pela leitura.
+ * ============================================================ */
+.stage { overflow: hidden !important; }
+
+/* Silhuetas também ganham fade extra para desaparecer suavemente
+ * antes de bater na borda do palco */
+.cinema-silhouette {
+  transition: opacity 200ms ease;
+}
+
+/* Reading section wraps below without seeing spillover */
+.reading.reading-cinema { position: relative; z-index: 5; }
