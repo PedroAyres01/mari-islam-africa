@@ -709,3 +709,216 @@ body.cinema-reduced *::before,
 body.cinema-reduced *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 body.cinema-reduced .cinema-grain { opacity: 0.08; }
 body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }
+
+/* ============================================================
+ * CINEMATIC TIMELINE — replace the floating numbers with a
+ * proper engraved horizontal timeline. Dots on a hairline gold
+ * axis, active marco highlighted with a halo.
+ * ============================================================ */
+#app > .story-bar {
+  background: linear-gradient(180deg, #0a1218 0%, #0e161e 100%);
+  border-top: 1px solid rgba(232, 197, 132, 0.15);
+  border-bottom: 1px solid rgba(232, 197, 132, 0.08);
+  padding: 22px 4vw 26px !important;
+  min-height: 92px !important;
+  position: relative;
+  gap: 24px !important;
+}
+#app > .story-bar::before {
+  /* Faint film-grain wash to blend with stage above */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='9'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.9  0 0 0 0 0.75  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 140px 140px;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}
+
+/* prev / next as ghost pill buttons */
+.story-bar > button {
+  background: transparent !important;
+  border: 1px solid rgba(232, 197, 132, 0.28) !important;
+  border-radius: 40px !important;
+  color: rgba(244, 236, 216, 0.85) !important;
+  padding: 0 20px !important;
+  min-height: 44px !important;
+  font-family: 'Barlow', Arial, sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease !important;
+  white-space: nowrap !important;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.story-bar > button:not(:disabled):hover {
+  color: #ffeec0 !important;
+  border-color: rgba(232, 197, 132, 0.7) !important;
+  background: rgba(232, 197, 132, 0.06) !important;
+}
+.story-bar > button:disabled { opacity: 0.25 !important; }
+
+/* The timeline: a hairline gold axis with dots per marco */
+.timeline {
+  position: relative;
+  display: flex !important;
+  flex: 1;
+  padding: 24px 0 8px !important;
+  gap: 0 !important;
+  overflow: visible !important;
+  min-width: 0;
+}
+.timeline::before {
+  /* The engraved gold axis */
+  content: "";
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  top: 34px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(232, 197, 132, 0.55) 8%,
+    rgba(232, 197, 132, 0.55) 92%,
+    transparent 100%);
+  z-index: 0;
+}
+.timeline::after {
+  /* Tiny decade tick marks along the axis for engraved feel */
+  content: "";
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  top: 30px;
+  height: 8px;
+  background-image: repeating-linear-gradient(90deg,
+    transparent 0,
+    transparent calc(100% / 40 - 1px),
+    rgba(232, 197, 132, 0.18) calc(100% / 40 - 1px),
+    rgba(232, 197, 132, 0.18) calc(100% / 40));
+  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.timeline button {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+  border: 0 !important;
+  color: rgba(232, 220, 200, 0.6) !important;
+  flex: 1;
+  min-width: 62px !important;
+  padding: 0 4px !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 0 !important;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.timeline button::before {
+  /* Dot on the axis */
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0e161e;
+  border: 1px solid rgba(232, 197, 132, 0.5);
+  margin: 30px 0 12px;
+  transition: transform 240ms ease, background 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+  position: relative;
+  z-index: 1;
+}
+.timeline button:hover {
+  color: #f4ecd8 !important;
+}
+.timeline button:hover::before {
+  transform: scale(1.35);
+  background: rgba(232, 197, 132, 0.4);
+  border-color: rgba(232, 197, 132, 0.85);
+}
+.timeline button[aria-current="true"] {
+  color: #f4d69a !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.timeline button[aria-current="true"]::before {
+  width: 12px;
+  height: 12px;
+  margin-top: 28px;
+  background: #f4d69a;
+  border-color: #f4d69a;
+  box-shadow:
+    0 0 0 4px rgba(244, 214, 154, 0.18),
+    0 0 20px rgba(244, 214, 154, 0.4);
+}
+.timeline button span {
+  display: block;
+  font-family: 'Barlow', Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: inherit;
+  margin: 0 !important;
+  font-variant-numeric: tabular-nums;
+}
+.timeline button small {
+  display: block !important;
+  margin-top: 4px !important;
+  font-family: 'Barlow', Arial, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(232, 220, 200, 0.5);
+  font-variant-numeric: tabular-nums;
+  transition: color 200ms ease;
+  opacity: 1 !important;
+}
+.timeline button[aria-current="true"] small { color: rgba(244, 214, 154, 0.85); }
+.timeline button:hover small { color: rgba(244, 214, 154, 0.75); }
+
+@media (max-width: 600px) {
+  #app > .story-bar { padding: 16px 12px 18px !important; min-height: 82px !important; gap: 8px !important; }
+  .story-bar > button { padding: 0 12px !important; font-size: 10px !important; letter-spacing: 0.14em !important; }
+  .timeline { padding: 18px 0 4px !important; }
+  .timeline::before { top: 26px; }
+  .timeline::after { top: 22px; }
+  .timeline button::before { margin-top: 22px; }
+  .timeline button[aria-current="true"]::before { margin-top: 20px; }
+  .timeline button { min-width: 44px !important; }
+  .timeline button small { font-size: 8px !important; }
+}
+
+/* ============================================================
+ * SMOOTH STAGE → BAR → READING TRANSITION
+ * Fade the stage bottom into the timeline bar into the reading
+ * atmosphere. No hard edges.
+ * ============================================================ */
+.stage::after {
+  /* Bottom vignette on stage — blends into story-bar */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 180px;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(10, 18, 24, 0.35) 45%,
+    rgba(10, 18, 24, 0.85) 100%);
+}
+/* Reading section — remove the abrupt top edge */
+.reading.reading-cinema {
+  background: linear-gradient(180deg,
+    #0e161e 0%,
+    #0a1218 12%,
+    #0a1218 100%) !important;
+}
