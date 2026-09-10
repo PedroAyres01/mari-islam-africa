@@ -6,6 +6,7 @@ import {gsap} from 'gsap';
 import {createAtlas} from './scene.js';
 import {createCinema} from './cinema.js';
 import {getBackdropForMarco, paletteForMarco} from './backdrops.js';
+import {initParallax} from './parallax.js';
 
 const directions=[
  ['Horizonte africano','Terra realista sobre uma paisagem de dunas, com leitura clara.','globe','O islã na África.','Redes que atravessam o tempo.'],
@@ -61,6 +62,8 @@ const cinema=createCinema({stageHost:$('.stage'),sceneEl:$('.scene')});
 cinema.initReading($('#reading'));
 // Initial sync of reduced state (in case user has prefers-reduced-motion)
 if(reduced)cinema.setReduced(true);
+// Parallax scroll layer (deferred a beat so DOM is settled)
+requestAnimationFrame(()=>initParallax($('main')));
 // Wire up the reading-closer CTA — jumps to next marco or bibliography
 document.addEventListener('click', ev => {
   const btn = ev.target.closest('#next-chapter');
