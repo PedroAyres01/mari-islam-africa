@@ -1288,3 +1288,17 @@ body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }
 
 /* Reading section wraps below without seeing spillover */
 .reading.reading-cinema { position: relative; z-index: 5; }
+
+/* Bug real fix: mobile CSS tem body[data-design] .stage {overflow:visible!important}
+ * que ganha por especificidade sobre .stage {overflow:hidden}. Preciso mesma especificidade
+ * ou maior pra sobrescrever definitivamente. */
+.stage,
+body[data-design] .stage,
+body.journey-active .stage,
+body.journey-active[data-design] .stage {
+  overflow: hidden !important;
+}
+
+/* Silhuetas: fade acompanha parallax progress no mobile via JS + garante que
+ * quando estão no topo do palco elas somem antes de escapar */
+.cinema-silhouette { pointer-events: none; }
