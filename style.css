@@ -922,3 +922,101 @@ body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }
     #0a1218 12%,
     #0a1218 100%) !important;
 }
+
+/* ============================================================
+ * REFINE STAGE FOOTER — anchor the "Conexões / Rever" caption
+ * in a proper bordered chip on the right, not floating naked
+ * ============================================================ */
+.scene-caption {
+  background: rgba(10, 18, 24, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(232, 197, 132, 0.18);
+  border-radius: 30px;
+  padding: 10px 18px !important;
+  gap: 14px !important;
+  font-family: 'Barlow', Arial, sans-serif;
+  font-size: 11px !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(232, 220, 200, 0.75) !important;
+  bottom: 88px !important;
+  right: 4vw !important;
+}
+.scene-caption > button {
+  border: 0 !important;
+  padding: 0 !important;
+  color: rgba(244, 214, 154, 0.9) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+.scene-caption > button:hover { color: #ffeec0 !important; }
+
+/* Stage foot — reduce visual weight so it doesn't compete with button */
+.stage-foot {
+  height: 44px !important;
+  border-top: 1px solid rgba(232, 197, 132, 0.12) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.16em !important;
+  color: rgba(232, 220, 200, 0.55) !important;
+  padding: 0 5vw !important;
+}
+.stage-foot span { color: inherit !important; }
+
+/* ============================================================
+ * COMPACT TIMELINE — reduce vertical footprint
+ * Also fix mobile text wrapping (dates were breaking into 2 lines)
+ * ============================================================ */
+#app > .story-bar {
+  min-height: 76px !important;
+  padding: 16px 4vw 18px !important;
+}
+.timeline { padding: 18px 0 2px !important; }
+.timeline::before { top: 26px; }
+.timeline::after { top: 22px; }
+.timeline button::before { margin: 22px 0 8px; }
+.timeline button[aria-current="true"]::before { margin-top: 20px; }
+.timeline button small {
+  white-space: nowrap;
+  font-size: 9.5px !important;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .timeline button small { font-size: 9px !important; }
+}
+@media (max-width: 600px) {
+  .scene-caption {
+    bottom: auto !important;
+    top: auto !important;
+    right: 12px !important;
+    left: 12px !important;
+    padding: 8px 12px !important;
+    font-size: 9px !important;
+    gap: 8px !important;
+    justify-content: space-between !important;
+  }
+  .scene-caption > button { font-size: 9px !important; letter-spacing: 0.12em !important; }
+  .stage-foot { height: 32px !important; font-size: 8px !important; padding: 0 20px !important; }
+
+  /* Mobile timeline — smaller, tighter, no wrap */
+  #app > .story-bar { min-height: 68px !important; padding: 10px 8px 12px !important; }
+  .timeline { padding: 14px 0 2px !important; overflow-x: auto !important; scrollbar-width: none; }
+  .timeline::-webkit-scrollbar { display: none; }
+  .timeline::before { top: 20px; left: 8px; right: 8px; }
+  .timeline::after { top: 16px; left: 8px; right: 8px; }
+  .timeline button { min-width: 52px !important; flex-shrink: 0 !important; padding: 0 2px !important; }
+  .timeline button::before { margin: 16px 0 6px; width: 6px; height: 6px; }
+  .timeline button[aria-current="true"]::before { margin-top: 14px; width: 10px; height: 10px; }
+  .timeline button span { font-size: 11px !important; letter-spacing: 0.12em !important; }
+  .timeline button small {
+    font-size: 8px !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+  }
+  .story-bar > button { min-height: 36px !important; padding: 0 10px !important; font-size: 9px !important; letter-spacing: 0.14em !important; }
+}
