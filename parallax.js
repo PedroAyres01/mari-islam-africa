@@ -1,191 +1,108 @@
-// parallax.js — smooth scroll + parallax layers on the main scroll container.
-// Uses Lenis for buttery scroll and GSAP ScrollTrigger for scroll-driven transforms.
-// Preserves all existing images/elements — only applies transform on scroll.
-import Lenis from 'lenis';
-import {gsap} from 'gsap';
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
+// parallax.js — lightweight scroll-driven parallax on the main scroll container.
+// No smooth-scroll library (avoids ScrollTrigger scrollerProxy + custom scroller conflicts).
+// Just a scroll listener + requestAnimationFrame that writes transform on a few layers.
+// Preserves every existing element — only writes `transform` on layers we own.
 
 export function initParallax(mainEl) {
   if (!mainEl) return () => {};
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
 
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  gsap.registerPlugin(ScrollTrigger);
+  // Resolve targets once; if any is missing at init time, we look again later
+  const q = (sel) => Array.from(mainEl.querySelectorAll(sel));
 
-  // -----------------------------
-  // Lenis on the main scroll container
-  // -----------------------------
-  const lenis = new Lenis({
-    wrapper: mainEl,
-    content: mainEl.firstElementChild || mainEl,
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    smoothTouch: false, // native touch on mobile stays fast
-    syncTouch: false,
-    infinite: false,
-  });
+  let bg = q('.landing-hero, .journey-backdrop');
+  let scene = mainEl.querySelector('.scene');
+  let copy = mainEl.querySelector('.copy');
+  let silhouettes = mainEl.querySelector('.cinema-silhouette');
+  let stageEl = mainEl.querySelector('.stage');
 
-  // Bridge Lenis into ScrollTrigger's clock
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-  gsap.ticker.lagSmoothing(0);
+  let raf = 0;
+  let queued = false;
 
-  // Make ScrollTrigger use main as the scroller
-  ScrollTrigger.scrollerProxy(mainEl, {
-    scrollTop(value) {
-      if (arguments.length) mainEl.scrollTop = value;
-      return mainEl.scrollTop;
-    },
-    getBoundingClientRect() {
-      return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
-    },
-  });
-  ScrollTrigger.defaults({scroller: mainEl});
+  function apply() {
+    queued = false;
+    if (!stageEl) return;
 
-  // -----------------------------
-  // Parallax layers
-  // Each defines: selector, yPercent target at end of scroll, ease
-  // -----------------------------
-  if (reduced) {
-    // Reduced motion: don't animate on scroll
-    return () => {
-      lenis.destroy();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
+    const scrolled = mainEl.scrollTop;
+    const stageHeight = stageEl.offsetHeight || 1;
+    // Progress: 0 at top of stage, 1 at bottom of stage (clamped)
+    const progress = Math.max(0, Math.min(1, scrolled / stageHeight));
+
+    // Background: gentle downward drift + slight zoom
+    const bgY = progress * 80;   // px
+    const bgScale = 1 + progress * 0.06;
+    for (const el of bg) {
+      el.style.transform = `translate3d(0, ${bgY}px, 0) scale(${bgScale})`;
+    }
+
+    // Scene (globe): moves up slightly, fades a touch
+    if (scene) {
+      const sceneY = -progress * 60;
+      scene.style.transform = `translate3d(0, ${sceneY}px, 0)`;
+    }
+
+    // Copy (title+text+button): moves up faster and fades out
+    if (copy) {
+      const copyY = -progress * 160;
+      const copyOp = 1 - progress * 0.85;
+      copy.style.transform = `translate3d(0, ${copyY}px, 0)`;
+      copy.style.opacity = String(Math.max(0, copyOp));
+    }
+
+    // Silhouettes: parallax up faster than background
+    if (silhouettes) {
+      const silY = -progress * 120;
+      silhouettes.style.transform = `translate3d(0, ${silY}px, 0)`;
+    }
   }
 
-  // Setup once fonts/scene are ready
-  const setup = () => {
-    // 1) Landing hero + journey backdrop — deepest layer, slowest (moves down a bit as you scroll)
-    ['.landing-hero', '.journey-backdrop'].forEach(sel => {
-      const el = document.querySelector(sel);
-      if (!el) return;
-      gsap.to(el, {
-        yPercent: 25,
-        scale: 1.08,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.stage',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-        },
-      });
-    });
+  function onScroll() {
+    if (queued) return;
+    queued = true;
+    raf = requestAnimationFrame(apply);
+  }
 
-    // 2) The 3D globe scene — mid layer, slower than copy
-    const scene = document.querySelector('.scene');
-    if (scene) {
-      gsap.to(scene, {
-        yPercent: -12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.stage',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
-      });
-    }
+  // Re-resolve targets when the DOM changes (chapter card, doc figures, etc.)
+  // — but never trigger recomputation on mutations we cause ourselves.
+  let refreshTimer = 0;
+  function refreshTargets() {
+    bg = q('.landing-hero, .journey-backdrop');
+    scene = mainEl.querySelector('.scene');
+    copy = mainEl.querySelector('.copy');
+    silhouettes = mainEl.querySelector('.cinema-silhouette');
+    stageEl = mainEl.querySelector('.stage');
+    apply();
+  }
+  function scheduleRefresh() {
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(refreshTargets, 200);
+  }
 
-    // 3) Copy (title + text + button) — foreground, moves up faster to exit sooner
-    const copy = document.querySelector('.copy');
-    if (copy) {
-      gsap.to(copy, {
-        yPercent: -30,
-        opacity: 0.4,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.stage',
-          start: 'top top',
-          end: 'bottom 30%',
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
-      });
-    }
+  mainEl.addEventListener('scroll', onScroll, {passive: true});
+  window.addEventListener('resize', onScroll);
 
-    // 4) Silhouettes at bottom — parallax up faster than backdrop
-    const silhouettes = document.querySelector('.cinema-silhouette');
-    if (silhouettes) {
-      gsap.to(silhouettes, {
-        yPercent: -60,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.stage',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.5,
-          invalidateOnRefresh: true,
-        },
-      });
-    }
-
-    // 5) Chapter card in reading section — subtle parallax as it enters
-    const chapter = document.querySelector('.reading-chapter');
-    if (chapter) {
-      gsap.from(chapter, {
-        yPercent: 12,
-        opacity: 0,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: chapter,
-          start: 'top 90%',
-          end: 'top 40%',
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // Year floats up slightly slower than the rest (depth effect)
-      const year = chapter.querySelector('.reading-chapter-year');
-      if (year) {
-        gsap.to(year, {
-          yPercent: -20,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: chapter,
-            start: 'top center',
-            end: 'bottom top',
-            scrub: 0.4,
-            invalidateOnRefresh: true,
-          },
-        });
+  // Refresh on marco changes (they modify layout without adding DOM nodes)
+  const observer = new MutationObserver((mutations) => {
+    // Only refresh if the mutation added/removed nodes we care about
+    for (const m of mutations) {
+      if (m.type === 'childList' && (m.addedNodes.length || m.removedNodes.length)) {
+        scheduleRefresh();
+        return;
       }
     }
+  });
+  // Watch only stage-level containers, not every subtree (avoids feedback loop)
+  const watchTargets = [stageEl, mainEl.querySelector('#reading')].filter(Boolean);
+  watchTargets.forEach(t => observer.observe(t, {childList: true}));
 
-    // 6) Documentary figures — fade + rise into view
-    document.querySelectorAll('.reading-doc').forEach(fig => {
-      gsap.from(fig, {
-        y: 60,
-        opacity: 0,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: fig,
-          start: 'top 90%',
-          end: 'top 55%',
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-        },
-      });
-    });
-
-    ScrollTrigger.refresh();
-  };
-
-  // Initial + refresh on window/resize
-  setup();
-  window.addEventListener('load', () => ScrollTrigger.refresh());
-
-  // Also refresh when the DOM changes (chapter card injected, docs injected later)
-  const mo = new MutationObserver(() => ScrollTrigger.refresh());
-  mo.observe(mainEl, {childList: true, subtree: true});
+  // Kick once so initial position is set
+  apply();
 
   return function destroy() {
-    mo.disconnect();
-    ScrollTrigger.getAll().forEach(t => t.kill());
-    lenis.destroy();
+    observer.disconnect();
+    clearTimeout(refreshTimer);
+    cancelAnimationFrame(raf);
+    mainEl.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onScroll);
   };
 }
