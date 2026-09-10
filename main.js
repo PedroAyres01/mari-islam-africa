@@ -62,8 +62,9 @@ const cinema=createCinema({stageHost:$('.stage'),sceneEl:$('.scene')});
 cinema.initReading($('#reading'));
 // Initial sync of reduced state (in case user has prefers-reduced-motion)
 if(reduced)cinema.setReduced(true);
-// Parallax scroll layer — deferred well past first paint so DOM/scene are settled
-window.addEventListener('load',()=>setTimeout(()=>initParallax($('main')),300),{once:true});
+// Parallax scroll layer — start now if page already loaded, else wait for load
+function startParallax(){setTimeout(()=>initParallax($('main')),200);}
+if(document.readyState==='complete')startParallax();else window.addEventListener('load',startParallax,{once:true});
 // Wire up the reading-closer CTA — jumps to next marco or bibliography
 document.addEventListener('click', ev => {
   const btn = ev.target.closest('#next-chapter');

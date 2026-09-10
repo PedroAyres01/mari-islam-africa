@@ -1302,3 +1302,49 @@ body.journey-active[data-design] .stage {
 /* Silhuetas: fade acompanha parallax progress no mobile via JS + garante que
  * quando estão no topo do palco elas somem antes de escapar */
 .cinema-silhouette { pointer-events: none; }
+
+/* ============================================================
+ * MOBILE: prev/next buttons + timeline não sobrepor
+ * Bug: #prev estava com width:28px (só chevron) mas texto ANTERIOR
+ * transbordava. Corrigir com pill full-text ambos.
+ * ============================================================ */
+@media (max-width: 700px) {
+  /* Story-bar layout: prev / timeline / next em grid horizontal fixo */
+  #app > .story-bar {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 10px 8px 12px !important;
+  }
+  .story-bar > #prev,
+  .story-bar > #next {
+    width: auto !important;
+    min-width: 0 !important;
+    font-size: 9.5px !important;
+    letter-spacing: 0.12em !important;
+    padding: 0 10px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    border-radius: 30px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+  .story-bar > #prev::before,
+  .story-bar > #prev:before {
+    content: none !important;
+  }
+  .story-bar > #next { display: inline-flex !important; }
+
+  /* Timeline compacto entre prev e next */
+  .timeline {
+    padding: 8px 0 2px !important;
+    min-width: 0 !important;
+  }
+  .timeline::before,
+  .timeline::after {
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
