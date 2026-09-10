@@ -1247,3 +1247,26 @@ body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }
   /* Silhouettes lower height on mobile */
   .cinema-silhouette { height: 100px !important; }
 }
+
+/* ============================================================
+ * FIX GAP HERO → READING (desktop)
+ * Chapter card foi calibrado com muito padding-top; reduzir
+ * para colar visualmente ao final do palco após o parallax.
+ * ============================================================ */
+.reading-chapter {
+  padding: 40px 8vw 30px !important;
+  min-height: auto !important;
+}
+.reading.reading-cinema {
+  padding: 0 0 80px !important;
+}
+@media (min-width: 701px) {
+  .reading-chapter { padding: 60px 8vw 32px !important; }
+  .reading-chapter-year { font-size: clamp(72px, 10vw, 140px) !important; }
+}
+
+/* Osmo-style parallax must not be capped by overflow:hidden on stage */
+.stage { overflow: visible !important; }
+
+/* Chapter card entering the viewport gets its own fade-up */
+.reading-chapter-inner { transition: opacity 400ms ease, transform 400ms ease; }

@@ -1,7 +1,6 @@
-// parallax.js — scroll-driven parallax on the main scroll container.
-// Uses BOTH scroll listeners AND a continuous rAF poll — iOS Safari touch
-// inertia often skips scroll events during coasting, so polling ensures
-// the transform stays glued to the finger.
+// parallax.js — Osmo-style layered parallax on the main scroll container.
+// Uses rAF loop for reliable performance on iOS touch inertia + fallback listeners.
+// Multiplies element displacement by viewport height for dramatic, visible effect.
 
 export function initParallax(mainEl) {
   if (!mainEl) return () => {};
@@ -13,6 +12,8 @@ export function initParallax(mainEl) {
   let copy = mainEl.querySelector('.copy');
   let silhouettes = mainEl.querySelector('.cinema-silhouette');
   let stageEl = mainEl.querySelector('.stage');
+  let sceneCaption = mainEl.querySelector('.scene-caption');
+  let stageFoot = mainEl.querySelector('.stage-foot');
 
   let lastScroll = -1;
   let lastStageH = 0;
@@ -22,41 +23,63 @@ export function initParallax(mainEl) {
     if (!stageEl) return;
     const scrolled = mainEl.scrollTop;
     const stageHeight = stageEl.offsetHeight || 1;
+    const vh = window.innerHeight;
 
-    // Skip work if nothing changed since last frame
     if (scrolled === lastScroll && stageHeight === lastStageH) return;
     lastScroll = scrolled;
     lastStageH = stageHeight;
 
-    // Progress: 0 at top of stage, 1 when the stage has fully scrolled out
+    // Progress: 0 at top of stage, 1 when stage has fully scrolled past
     const progress = Math.max(0, Math.min(1, scrolled / stageHeight));
+    // Extended progress that keeps growing past stage end (for reading section reveal)
+    const p2 = Math.max(0, Math.min(1.5, scrolled / (stageHeight * 0.85)));
 
-    // Background: gentle downward drift + slight zoom (deepest layer)
-    const bgY = progress * 80;
-    const bgScale = 1 + progress * 0.06;
+    // BACKGROUND (deepest layer): drifts down a lot + zooms in
+    // Uses full viewport height as base — Osmo-style dramatic depth
+    const bgY = progress * vh * 0.5;   // up to half viewport down
+    const bgScale = 1 + progress * 0.15;
     for (const el of bg) {
       el.style.transform = `translate3d(0, ${bgY}px, 0) scale(${bgScale})`;
+      el.style.willChange = 'transform';
     }
 
-    // Scene (globe): moves up slightly (mid layer)
+    // SCENE (globe): mid layer, drifts up slower
     if (scene) {
-      scene.style.transform = `translate3d(0, ${-progress * 60}px, 0)`;
+      const sceneY = -progress * vh * 0.25;
+      scene.style.transform = `translate3d(0, ${sceneY}px, 0)`;
+      scene.style.willChange = 'transform';
     }
 
-    // Copy (title+text+button): moves up faster and fades out (foreground)
+    // COPY (title+text+button): foreground, moves up faster + fades
     if (copy) {
-      copy.style.transform = `translate3d(0, ${-progress * 160}px, 0)`;
-      copy.style.opacity = String(Math.max(0, 1 - progress * 0.85));
+      const copyY = -progress * vh * 0.55;
+      const copyOp = 1 - Math.min(1, progress * 1.4);
+      copy.style.transform = `translate3d(0, ${copyY}px, 0)`;
+      copy.style.opacity = String(Math.max(0, copyOp));
+      copy.style.willChange = 'transform, opacity';
     }
 
-    // Silhouettes: parallax up fast
+    // SILHOUETTES: fastest foreground — dives out fast
     if (silhouettes) {
-      silhouettes.style.transform = `translate3d(0, ${-progress * 120}px, 0)`;
+      const silY = -progress * vh * 0.6;
+      silhouettes.style.transform = `translate3d(0, ${silY}px, 0)`;
+      silhouettes.style.willChange = 'transform';
+    }
+
+    // STAGE CAPTION + FOOT: also drift up so they don't linger
+    if (sceneCaption) {
+      const capY = -progress * vh * 0.4;
+      sceneCaption.style.transform = `translate3d(0, ${capY}px, 0)`;
+      sceneCaption.style.opacity = String(Math.max(0, 1 - progress * 1.8));
+    }
+    if (stageFoot) {
+      const footY = -progress * vh * 0.3;
+      stageFoot.style.transform = `translate3d(0, ${footY}px, 0)`;
+      stageFoot.style.opacity = String(Math.max(0, 1 - progress * 1.6));
     }
   }
 
-  // Continuous rAF loop — the reliable signal on mobile (iOS Safari fires
-  // scroll events sparsely during touch inertia).
+  // Continuous rAF loop — reliable on iOS touch inertia
   let raf = 0;
   function loop() {
     if (!running) return;
@@ -64,16 +87,14 @@ export function initParallax(mainEl) {
     raf = requestAnimationFrame(loop);
   }
 
-  // Also listen for scroll events on multiple candidate containers so the
-  // page is responsive to *some* signal even before the first rAF settles.
   function nudge() { apply(); }
   mainEl.addEventListener('scroll', nudge, {passive: true});
   window.addEventListener('scroll', nudge, {passive: true});
   document.addEventListener('scroll', nudge, {passive: true, capture: true});
-  window.addEventListener('resize', nudge);
+  window.addEventListener('resize', () => { lastStageH = 0; nudge(); });
   window.addEventListener('touchmove', nudge, {passive: true});
 
-  // Refresh cached targets when DOM changes (chapter card injected, docs, etc.)
+  // Refresh cached targets when DOM changes
   let refreshTimer = 0;
   function refreshTargets() {
     bg = q('.landing-hero, .journey-backdrop');
@@ -81,7 +102,9 @@ export function initParallax(mainEl) {
     copy = mainEl.querySelector('.copy');
     silhouettes = mainEl.querySelector('.cinema-silhouette');
     stageEl = mainEl.querySelector('.stage');
-    lastScroll = -1;  // force re-apply
+    sceneCaption = mainEl.querySelector('.scene-caption');
+    stageFoot = mainEl.querySelector('.stage-foot');
+    lastScroll = -1;
     lastStageH = 0;
   }
   function scheduleRefresh() {
@@ -99,7 +122,6 @@ export function initParallax(mainEl) {
   const watchTargets = [stageEl, mainEl.querySelector('#reading')].filter(Boolean);
   watchTargets.forEach(t => observer.observe(t, {childList: true}));
 
-  // Start
   apply();
   raf = requestAnimationFrame(loop);
 
@@ -111,7 +133,6 @@ export function initParallax(mainEl) {
     mainEl.removeEventListener('scroll', nudge);
     window.removeEventListener('scroll', nudge);
     document.removeEventListener('scroll', nudge, true);
-    window.removeEventListener('resize', nudge);
     window.removeEventListener('touchmove', nudge);
   };
 }
