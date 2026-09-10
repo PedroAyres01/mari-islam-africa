@@ -108,12 +108,10 @@ const MEDALLION_SVG = `<svg viewBox="0 0 240 40" xmlns="http://www.w3.org/2000/s
 </svg>`;
 
 export function createCinema({stageHost, sceneEl}) {
-  // 1. Silhouette layer (caravan/dhow) at bottom of stage
-  const silhouettes = document.createElement('div');
-  silhouettes.className = 'cinema-silhouette';
-  silhouettes.dataset.kind = 'caravan';
-  silhouettes.innerHTML = CAMEL_SVG;
-  stageHost.append(silhouettes);
+  // Silhouette layer removed by design — the SVG shapes read as bugged floating
+  // artifacts against cinema backdrops. Constellations + dust particles + film
+  // grain carry the atmospheric depth.
+  const silhouettes = null;
 
   // 2. Constellations layer behind globe (subtle, ambient)
   const constellations = document.createElement('div');
@@ -194,12 +192,7 @@ export function createCinema({stageHost, sceneEl}) {
   }
 
   function updateSilhouetteKind(idx) {
-    const e = events[idx];
-    const kind = e && e.region === 'east' ? 'dhow' : 'caravan';
-    if (silhouettes.dataset.kind !== kind) {
-      silhouettes.dataset.kind = kind;
-      silhouettes.innerHTML = kind === 'dhow' ? DHOW_SVG : CAMEL_SVG;
-    }
+    // silhouettes removed — no-op
   }
 
   function onMarco(idx, reducedMotion) {
@@ -220,13 +213,7 @@ export function createCinema({stageHost, sceneEl}) {
     gsap.killTweensOf(timecode);
     gsap.fromTo(timecode, {opacity: 0, y: -6}, {opacity: 1, y: 0, duration: reduced ? 0 : 0.5, ease: 'power2.out', overwrite: true});
 
-    // Update silhouettes for region
-    updateSilhouetteKind(idx);
-    if (!reduced) {
-      gsap.fromTo(silhouettes, {opacity: 0}, {opacity: 1, duration: 1.2, ease: 'power2.out', overwrite: true});
-    } else {
-      silhouettes.style.opacity = 1;
-    }
+    // silhouettes disabled
 
     // Letterbox pulse — bars slide in ~120px then retract to a thin permanent band ~28px
     if (reduced) {
@@ -269,7 +256,6 @@ export function createCinema({stageHost, sceneEl}) {
     timecode.hidden = true;
     credit.hidden = true;
     gsap.to([letterTop, letterBot], {height: 0, duration: 0.35, ease: 'expo.out'});
-    gsap.to(silhouettes, {opacity: 0, duration: 0.4});
   }
 
   function onDesignChange(designKey) {
@@ -536,13 +522,12 @@ export function createCinema({stageHost, sceneEl}) {
     document.body.classList.toggle('cinema-reduced', next);
     // Kill any in-flight GSAP animations for the cinema elements
     if (next) {
-      gsap.killTweensOf([letterTop, letterBot, timecode, credit, silhouettes, constellations]);
+      gsap.killTweensOf([letterTop, letterBot, timecode, credit, constellations]);
       // Snap letterbox to permanent state
       gsap.set([letterTop, letterBot], {height: 18});
-      // Ensure credit is hidden and silhouettes visible
+      // Ensure credit is hidden
       gsap.set(credit, {opacity: 0});
       if (credit) credit.hidden = true;
-      gsap.set(silhouettes, {opacity: 0.6});
       // Stop reading-canvas particle loop
       if (readingRAF) { cancelAnimationFrame(readingRAF); readingRAF = null; }
       // Draw one static frame
