@@ -1,69 +1,79 @@
-// parallax.js — lightweight scroll-driven parallax on the main scroll container.
-// No smooth-scroll library (avoids ScrollTrigger scrollerProxy + custom scroller conflicts).
-// Just a scroll listener + requestAnimationFrame that writes transform on a few layers.
-// Preserves every existing element — only writes `transform` on layers we own.
+// parallax.js — scroll-driven parallax on the main scroll container.
+// Uses BOTH scroll listeners AND a continuous rAF poll — iOS Safari touch
+// inertia often skips scroll events during coasting, so polling ensures
+// the transform stays glued to the finger.
 
 export function initParallax(mainEl) {
   if (!mainEl) return () => {};
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
 
-  // Resolve targets once; if any is missing at init time, we look again later
   const q = (sel) => Array.from(mainEl.querySelectorAll(sel));
-
   let bg = q('.landing-hero, .journey-backdrop');
   let scene = mainEl.querySelector('.scene');
   let copy = mainEl.querySelector('.copy');
   let silhouettes = mainEl.querySelector('.cinema-silhouette');
   let stageEl = mainEl.querySelector('.stage');
 
-  let raf = 0;
-  let queued = false;
+  let lastScroll = -1;
+  let lastStageH = 0;
+  let running = true;
 
   function apply() {
-    queued = false;
     if (!stageEl) return;
-
     const scrolled = mainEl.scrollTop;
     const stageHeight = stageEl.offsetHeight || 1;
-    // Progress: 0 at top of stage, 1 at bottom of stage (clamped)
+
+    // Skip work if nothing changed since last frame
+    if (scrolled === lastScroll && stageHeight === lastStageH) return;
+    lastScroll = scrolled;
+    lastStageH = stageHeight;
+
+    // Progress: 0 at top of stage, 1 when the stage has fully scrolled out
     const progress = Math.max(0, Math.min(1, scrolled / stageHeight));
 
-    // Background: gentle downward drift + slight zoom
-    const bgY = progress * 80;   // px
+    // Background: gentle downward drift + slight zoom (deepest layer)
+    const bgY = progress * 80;
     const bgScale = 1 + progress * 0.06;
     for (const el of bg) {
       el.style.transform = `translate3d(0, ${bgY}px, 0) scale(${bgScale})`;
     }
 
-    // Scene (globe): moves up slightly, fades a touch
+    // Scene (globe): moves up slightly (mid layer)
     if (scene) {
-      const sceneY = -progress * 60;
-      scene.style.transform = `translate3d(0, ${sceneY}px, 0)`;
+      scene.style.transform = `translate3d(0, ${-progress * 60}px, 0)`;
     }
 
-    // Copy (title+text+button): moves up faster and fades out
+    // Copy (title+text+button): moves up faster and fades out (foreground)
     if (copy) {
-      const copyY = -progress * 160;
-      const copyOp = 1 - progress * 0.85;
-      copy.style.transform = `translate3d(0, ${copyY}px, 0)`;
-      copy.style.opacity = String(Math.max(0, copyOp));
+      copy.style.transform = `translate3d(0, ${-progress * 160}px, 0)`;
+      copy.style.opacity = String(Math.max(0, 1 - progress * 0.85));
     }
 
-    // Silhouettes: parallax up faster than background
+    // Silhouettes: parallax up fast
     if (silhouettes) {
-      const silY = -progress * 120;
-      silhouettes.style.transform = `translate3d(0, ${silY}px, 0)`;
+      silhouettes.style.transform = `translate3d(0, ${-progress * 120}px, 0)`;
     }
   }
 
-  function onScroll() {
-    if (queued) return;
-    queued = true;
-    raf = requestAnimationFrame(apply);
+  // Continuous rAF loop — the reliable signal on mobile (iOS Safari fires
+  // scroll events sparsely during touch inertia).
+  let raf = 0;
+  function loop() {
+    if (!running) return;
+    apply();
+    raf = requestAnimationFrame(loop);
   }
 
-  // Re-resolve targets when the DOM changes (chapter card, doc figures, etc.)
-  // — but never trigger recomputation on mutations we cause ourselves.
+  // Also listen for scroll events on multiple candidate containers so the
+  // page is responsive to *some* signal even before the first rAF settles.
+  function nudge() { apply(); }
+  mainEl.addEventListener('scroll', nudge, {passive: true});
+  window.addEventListener('scroll', nudge, {passive: true});
+  document.addEventListener('scroll', nudge, {passive: true, capture: true});
+  window.addEventListener('resize', nudge);
+  window.addEventListener('touchmove', nudge, {passive: true});
+
+  // Refresh cached targets when DOM changes (chapter card injected, docs, etc.)
   let refreshTimer = 0;
   function refreshTargets() {
     bg = q('.landing-hero, .journey-backdrop');
@@ -71,19 +81,14 @@ export function initParallax(mainEl) {
     copy = mainEl.querySelector('.copy');
     silhouettes = mainEl.querySelector('.cinema-silhouette');
     stageEl = mainEl.querySelector('.stage');
-    apply();
+    lastScroll = -1;  // force re-apply
+    lastStageH = 0;
   }
   function scheduleRefresh() {
     clearTimeout(refreshTimer);
     refreshTimer = setTimeout(refreshTargets, 200);
   }
-
-  mainEl.addEventListener('scroll', onScroll, {passive: true});
-  window.addEventListener('resize', onScroll);
-
-  // Refresh on marco changes (they modify layout without adding DOM nodes)
   const observer = new MutationObserver((mutations) => {
-    // Only refresh if the mutation added/removed nodes we care about
     for (const m of mutations) {
       if (m.type === 'childList' && (m.addedNodes.length || m.removedNodes.length)) {
         scheduleRefresh();
@@ -91,18 +96,22 @@ export function initParallax(mainEl) {
       }
     }
   });
-  // Watch only stage-level containers, not every subtree (avoids feedback loop)
   const watchTargets = [stageEl, mainEl.querySelector('#reading')].filter(Boolean);
   watchTargets.forEach(t => observer.observe(t, {childList: true}));
 
-  // Kick once so initial position is set
+  // Start
   apply();
+  raf = requestAnimationFrame(loop);
 
   return function destroy() {
+    running = false;
+    cancelAnimationFrame(raf);
     observer.disconnect();
     clearTimeout(refreshTimer);
-    cancelAnimationFrame(raf);
-    mainEl.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', onScroll);
+    mainEl.removeEventListener('scroll', nudge);
+    window.removeEventListener('scroll', nudge);
+    document.removeEventListener('scroll', nudge, true);
+    window.removeEventListener('resize', nudge);
+    window.removeEventListener('touchmove', nudge);
   };
 }
