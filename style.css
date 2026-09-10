@@ -1020,3 +1020,230 @@ body.cinema-reduced .cinema-constellations.on { opacity: 0.5; }
   }
   .story-bar > button { min-height: 36px !important; padding: 0 10px !important; font-size: 9px !important; letter-spacing: 0.14em !important; }
 }
+
+/* ============================================================
+ * MOBILE OVERHAUL — fluid stacking, no overlaps
+ * Below 700px: strip caption chip + stage-foot, resize globe,
+ * fit everything in viewport, timeline as clean bottom bar.
+ * ============================================================ */
+@media (max-width: 700px) {
+  /* Hide instruction chips and status text on mobile - visual noise */
+  .scene-caption,
+  .stage-foot,
+  .journey-active .journey-credit,
+  .place-labels { display: none !important; }
+
+  /* Stage: use fit viewport, no fixed min-heights */
+  .stage,
+  body[data-design] .stage {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Copy block: natural stack, no absolute */
+  .copy,
+  body[data-design] .copy,
+  body.journey-active[data-design] .copy {
+    position: relative !important;
+    width: 100% !important;
+    padding: 32px 24px 24px !important;
+    margin: 0 !important;
+    display: block !important;
+    text-align: left !important;
+    z-index: 3;
+    background: transparent;
+  }
+  .byline,
+  body[data-design] .byline { margin: 0 0 20px !important; font-size: 11px !important; }
+  .copy h1,
+  body[data-design] h1,
+  body.journey-active[data-design] h1 {
+    font-size: clamp(32px, 8.5vw, 48px) !important;
+    max-width: 100% !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.03em !important;
+    text-wrap: balance;
+  }
+  .subtitle,
+  body[data-design] .subtitle,
+  body.journey-active .subtitle {
+    font-size: 18px !important;
+    margin: 18px 0 12px !important;
+    line-height: 1.35 !important;
+  }
+  .thesis,
+  body[data-design] .thesis,
+  body.journey-active .thesis {
+    font-size: 14px !important;
+    max-width: 100% !important;
+    line-height: 1.55 !important;
+    margin: 0 0 22px !important;
+  }
+  .primary,
+  body[data-design] .primary {
+    min-height: 48px !important;
+    padding: 14px 22px !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+  }
+  .secondary { min-height: 40px !important; padding: 6px 0 !important; font-size: 11px !important; margin: 12px 16px 0 0 !important; }
+
+  #journey-date,
+  body.journey-active #journey-date {
+    font-size: 12px !important;
+    letter-spacing: 0.08em !important;
+    margin: 0 0 14px !important;
+    color: rgba(232, 220, 200, 0.75);
+  }
+
+  /* Scene: sits BELOW the copy in natural flow */
+  .scene,
+  body[data-design] .scene,
+  body.journey-active .scene {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: 380px !important;
+    min-height: 380px;
+    z-index: 1;
+    order: 2;
+    touch-action: none;
+  }
+  .scene canvas { touch-action: pan-y; }
+
+  /* Backdrop covers only the stage now */
+  .journey-backdrop,
+  .landing-hero {
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+    z-index: 0;
+  }
+  .journey-shade {
+    background: linear-gradient(180deg, rgba(10,18,24,.55), rgba(10,18,24,.25) 40%, rgba(10,18,24,.7));
+  }
+
+  /* City tag: keep pointer targets fat, minimal chrome */
+  .city-tag {
+    font-size: 10px !important;
+    padding: 6px 10px !important;
+    min-height: 32px !important;
+    max-width: 100px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Story-bar: keep bottom-sticky but very compact */
+  #app > .story-bar {
+    min-height: 62px !important;
+    padding: 10px 8px 12px !important;
+    gap: 6px !important;
+    flex-shrink: 0;
+  }
+  .story-bar > button {
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 9.5px !important;
+    letter-spacing: 0.12em !important;
+    border-radius: 30px !important;
+  }
+  .story-bar > #next { display: flex !important; }
+  .timeline {
+    padding: 12px 0 2px !important;
+    gap: 0 !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .timeline::-webkit-scrollbar { display: none; }
+  .timeline::before, .timeline::after {
+    left: 8px !important;
+    right: 8px !important;
+  }
+  .timeline::before { top: 18px !important; }
+  .timeline::after { top: 14px !important; }
+  .timeline button {
+    min-width: 46px !important;
+    flex: 0 0 auto !important;
+    padding: 0 2px !important;
+    scroll-snap-align: center;
+  }
+  .timeline button::before {
+    margin: 14px 0 5px !important;
+    width: 6px !important;
+    height: 6px !important;
+  }
+  .timeline button[aria-current="true"]::before {
+    margin-top: 12px !important;
+    width: 10px !important;
+    height: 10px !important;
+  }
+  .timeline button span { font-size: 11px !important; letter-spacing: 0.1em !important; }
+  .timeline button small {
+    font-size: 8.5px !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1 !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+  }
+
+  /* App: allow #app main + stage to grow naturally, main scrolls internally */
+  body { min-height: 100dvh; height: 100dvh; overflow: hidden; }
+  #app { height: 100dvh; display: flex; flex-direction: column; }
+  #app > header { flex: 0 0 62px !important; padding: 0 20px !important; height: 62px !important; }
+  #app > main { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+  .brand { font-size: 17px !important; }
+  .brand span { font-size: 8px !important; margin-top: 3px !important; }
+  header nav { gap: 12px !important; }
+  header nav button,
+  header nav a {
+    font-size: 11px !important;
+    padding: 6px 0 !important;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Reading section: already tight, ensure no overflow */
+  .reading.reading-cinema { padding: 40px 0 60px !important; }
+  .reading-chapter { padding: 40px 20px 24px !important; min-height: auto !important; }
+  .reading-chapter-year { font-size: clamp(56px, 18vw, 88px) !important; }
+  .reading-chapter-title { font-size: clamp(22px, 5.5vw, 28px) !important; }
+  .reading.reading-cinema .reading-body { padding: 0 20px 32px !important; font-size: 16px !important; }
+  .reading.reading-cinema .reading-body #paragraph { font-size: 16px !important; line-height: 1.65 !important; }
+  .reading.reading-cinema .reading-body #paragraph::first-letter {
+    font-size: 3em !important;
+    padding: 2px 10px 0 0 !important;
+  }
+  .reading-doc { margin: 24px 0 !important; }
+  .reading-doc-frame { padding: 8px !important; }
+  .reading-doc figcaption { padding: 12px 4px 0 !important; font-size: 12px !important; }
+  .reading-closer { padding: 12px 20px 40px !important; gap: 20px !important; }
+  .reading-closer-cta { padding: 16px 20px 18px !important; }
+  .reading-closer-title { font-size: 15px !important; }
+
+  /* Chapter card ornament smaller on mobile */
+  .reading-chapter-ornament { width: 180px !important; }
+
+  /* Reduce cinema HUD noise on mobile */
+  .cinema-timecode {
+    top: 8px !important;
+    right: 8px !important;
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.14em !important;
+    gap: 4px !important;
+  }
+  .cinema-timecode-region { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .cinema-credit-year { font-size: clamp(64px, 18vw, 96px) !important; }
+  .cinema-credit-title { font-size: 11px !important; letter-spacing: 0.08em !important; }
+
+  /* Silhouettes lower height on mobile */
+  .cinema-silhouette { height: 100px !important; }
+}
