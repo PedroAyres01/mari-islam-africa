@@ -1,27 +1,31 @@
-# Dez direções para Entre areias e mar
+# O Islã à beira do deserto
 
-Abrir a versão construída em `http://127.0.0.1:8766/alternativas/dist/?v=1` quando o servidor da pasta principal estiver ligado.
+Linha do tempo interativa de Mariana Rodrigues Fernandes: dez marcos de c. 613 (fuga para Axum) a c. 1440 (Timbuctu). O conteúdo segue o roteiro final dela, "O Islã à beira do Deserto .pdf", transcrito em `content.js`.
 
 ## Executar
 
-No Mac, dê dois cliques em **Abrir experiência.command**. O navegador abre a versão já construída; mantenha a janela do servidor aberta enquanto navega. Não precisa instalar Vite para esse modo.
+No Mac, dê dois cliques em **Abrir experiência.command** para abrir a versão construída (`dist/`); mantenha a janela do servidor aberta enquanto navega.
 
-Na pasta `alternativas`, execute `npm install` e `npm run dev`. Acesse `http://127.0.0.1:5174`. Para atualizar a versão estática, execute `npm run build`.
+Para desenvolver: `npm install` e `npm run dev` nesta pasta, depois `http://127.0.0.1:5174`. Para atualizar `dist/`: `npm run build`.
 
-## Comparar
+## Percurso
 
-Comece por **Começar a viagem**. Setas esquerda/direita avançam e voltam na história; teclas 1–9 e 0 selecionam os dez marcos. R repete o movimento. As datas e botões Anterior/Próximo marco permanecem disponíveis. Arraste o globo, clique nas cidades ou use **Ver fotografia do lugar**. **Entender este marco** leva à análise e às fontes.
+1. **Abertura** — ilustração do Masjid al-Haram (`kaaba.js`, canvas 2D): nuvens em deriva e anéis de peregrinos girando em sentido anti-horário, com o texto de introdução.
+2. **Caravana** — a miniatura de 1237 se forma a partir de grãos de areia e passa a se mover (`painting.js`, WebGL2). O cursor desfaz a imagem em areia.
+3. **Viagem** — globo (`globe.js`, Three.js) com a rota dourada desenhada marco a marco e um camelo (um barco na travessia do Mar Vermelho). A régua de astrolábio embaixo traz as datas. Setas ← → do teclado navegam. **Entender este marco** abre o fólio com os detalhes e os documentos.
+4. **Atlas Catalão** — depois de Mansa Musa: a folha se aproxima do rei, que ergue a moeda de ouro e a entrega ao cavaleiro.
+5. **Fim** — mandala em movimento com o texto final e o Alcorão 49:13.
+6. **Referências e documentos** — referências com a indicação de onde cada uma foi usada; acervo de todas as imagens com a fonte.
 
-O botão **Comparar visuais** revela as dez alternativas. Enquanto esse painel está aberto, as setas e teclas numéricas escolhem a direção visual. Feche o painel para voltar aos atalhos históricos.
+## Arquivos
 
-As opções são composições comparáveis, com narrativa e leitura compartilhadas; não são dez sites independentes. A experiência principal é uma viagem guiada, com fotos contextuais, câmera e rotas associadas aos marcos. O original permanece na pasta superior. A escolha definitiva ainda está aberta.
+- `content.js` — todo o texto, lugares, imagens e referências.
+- `ornaments.js` — estrelas de oito pontas, bandas de borda, rosetas e mandala em SVG gerado por código.
+- `public/assets/doc/` — documentos e fotografias indicados por Mariana (origem de cada um na página de documentos do site).
+- `public/assets/fonts/` — Aref Ruqaa e Spectral (SIL OFL).
 
-## Verificação
+Sem WebGL, as pinturas aparecem estáticas e a viagem segue pelo texto. Com "reduzir movimento" ativo no sistema, as animações param e as cenas aparecem no estado final.
 
-Vite 8.2.2 e Three.js 0.186.0. Build concluído. Playwright verificou as dez alternativas em 1440×900, 768×1024 e 375×812, sem transbordamento horizontal. Navegação dos dez marcos, seletor de fotos, movimento reduzido e setas de comparação exercitados. Sem erros de console nessa verificação.
+## Limites
 
-O bundle principal inclui o Three.js e tem aproximadamente 582 kB minificado (150 kB gzip). Fotos e texturas são locais. O fundo de dunas é uma ilustração gerada por IA; seu prompt está em `public/assets/horizonte.prompt.txt`. Fotos documentais e licenças: `public/assets/PHOTO-CREDITS.json`. Texturas contemporâneas da Terra: exemplos oficiais Three.js, arquivos earth_atmos_2048.jpg, earth_normal_2048.jpg e earth_specular_2048.jpg.
-
-## Limites acadêmicos
-
-Mariana precisa revisar o argumento, as fontes e a regra de assistência externa antes da entrega. O limite 1482 pertence à atividade; os dez marcos escolhidos terminam em 1468. Formas tridimensionais abstratas e rotas são esquemáticas, não reconstituições históricas.
+A ilustração da abertura, os ornamentos e a mandala foram desenhados para o site e não são documentos históricos. A rota no globo liga os lugares na ordem dos marcos e é esquemática. As animações movimentam as imagens originais por deformação; elas não foram redesenhadas.

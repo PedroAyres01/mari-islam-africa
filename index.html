@@ -1,2 +1,130 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#192127"><meta name="description" content="Uma viagem pela história da África: religião, comércio e vida social em dez marcos, por Mariana Rodrigues Fernandes."><title>Entre areias e mar — uma história em movimento</title></head><body><div id="app"></div><script type="module" src="/main.js"></script></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#14223a">
+  <meta name="description" content="O Islã à beira do deserto: linha do tempo em dez marcos, de Axum (c. 613) a Timbuctu (c. 1440), por Mariana Rodrigues Fernandes.">
+  <title>O Islã à beira do deserto</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./assets/fonts/aref-ruqaa-bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="./assets/fonts/spectral-regular.ttf" as="font" type="font/ttf" crossorigin>
+</head>
+<body>
+  <a class="skip" href="#referencias-lista">Ir para as referências</a>
+  <div class="site-frame" aria-hidden="true"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+  <header class="masthead">
+    <button class="brand" id="go-home" type="button">O Islã à beira do deserto</button>
+  </header>
+
+  <main>
+    <section class="view view-intro is-active" id="abertura" aria-labelledby="intro-title">
+      <div class="kaaba-host" id="kaaba"></div>
+      <div class="cartouche">
+        <h1 id="intro-title"></h1>
+        <p class="byline">Por Mariana Rodrigues Fernandes</p>
+        <p class="intro-text" id="intro-text"></p>
+        <p class="invite" id="intro-invite"></p>
+        <button class="btn btn-gold" id="start" type="button">Começar a viagem</button>
+      </div>
+    </section>
+
+    <section class="view view-scene view-caravan" id="caravana" aria-labelledby="caravana-title" hidden>
+      <div class="dunes" id="dunes" aria-hidden="true"></div>
+      <div class="scene-paper">
+        <div class="scene-art" id="caravana-art"></div>
+        <div class="scene-bar">
+          <div>
+            <h2 id="caravana-title"></h2>
+            <p id="caravana-caption"></p>
+          </div>
+          <p class="scene-hint" id="caravana-hint">Passe o cursor pela areia</p>
+          <button class="btn btn-gold" id="caravana-go" type="button">Seguir a caravana</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view view-journey" id="viagem" aria-label="Linha do tempo em dez marcos" hidden>
+      <div class="journey-stage">
+        <div class="globe-host" id="globe"></div>
+        <article class="marco-panel" id="marco-panel" aria-live="polite">
+          <h2 class="marco-title" id="marco-title"></h2>
+          <p class="marco-date" id="marco-date"></p>
+          <p class="marco-text" id="marco-text"></p>
+          <div class="marco-actions">
+            <button class="btn btn-quiet" id="understand" type="button">Entender este marco</button>
+            <button class="btn btn-gold" id="continue" type="button">Continuar viagem</button>
+          </div>
+        </article>
+        <nav class="astrolabe" aria-label="Datas da linha do tempo">
+          <button class="astro-step" id="prev" type="button" aria-label="Marco anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <ol class="astro-scale" id="timeline"></ol>
+          <button class="astro-step" id="next" type="button" aria-label="Próximo marco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </nav>
+      </div>
+      <article class="folio" id="folio" aria-labelledby="folio-title" hidden>
+        <div class="folio-band" aria-hidden="true"></div>
+        <header class="folio-head">
+          <h2 id="folio-title"></h2>
+          <p class="marco-date" id="folio-date"></p>
+        </header>
+        <div class="folio-grid">
+          <div class="folio-text" id="folio-text"></div>
+          <div class="folio-figures" id="folio-figures"></div>
+        </div>
+        <footer class="folio-foot">
+          <p>As referências deste marco estão reunidas no fim da viagem.</p>
+          <div class="marco-actions">
+            <button class="btn btn-quiet" id="back-globe" type="button">Voltar ao globo</button>
+            <button class="btn btn-gold" id="folio-continue" type="button">Continuar viagem</button>
+          </div>
+        </footer>
+      </article>
+    </section>
+
+    <section class="view view-scene view-atlas" id="atlas" aria-labelledby="atlas-title" hidden>
+      <div class="scene-paper">
+        <div class="scene-art" id="atlas-art">
+          <img class="atlas-sheet" id="atlas-sheet" src="./assets/doc/atlas-catalao.webp" alt="" aria-hidden="true" loading="lazy">
+          <span class="coin" id="coin" aria-hidden="true"></span>
+        </div>
+        <div class="scene-bar">
+          <div>
+            <h2 id="atlas-title"></h2>
+            <p id="atlas-caption"></p>
+          </div>
+          <button class="btn btn-gold" id="atlas-go" type="button">Continuar viagem</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view view-finale" id="fim" aria-labelledby="fim-title" hidden>
+      <div class="mandala" id="mandala"></div>
+      <div class="finale-card">
+        <h2 class="visually-hidden" id="fim-title">Fim da viagem</h2>
+        <p class="finale-text" id="finale-text"></p>
+        <blockquote class="finale-quote"><p id="finale-quote"></p><cite id="finale-cite"></cite></blockquote>
+        <p class="finale-end">FIM</p>
+        <button class="btn btn-gold" id="see-refs" type="button">Ver referências</button>
+      </div>
+    </section>
+
+    <section class="view view-refs" id="referencias" aria-labelledby="refs-title" hidden>
+      <div class="refs-page">
+        <div class="folio-band" aria-hidden="true"></div>
+        <h2 id="refs-title">Referências</h2>
+        <p class="refs-lede">Lista das referências bibliográficas usadas no percurso, com a indicação de onde cada uma foi utilizada.</p>
+        <ol class="refs-list" id="referencias-lista"></ol>
+        <h2 id="docs-title">Documentos e imagens</h2>
+        <p class="refs-lede">Todas as fontes visuais apresentadas na viagem, com a origem de cada imagem.</p>
+        <div class="docs-grid" id="docs"></div>
+        <footer class="credits" id="credits"></footer>
+        <div class="marco-actions">
+          <button class="btn btn-quiet" id="restart" type="button">Recomeçar a viagem</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

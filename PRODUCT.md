@@ -6,44 +6,32 @@
 web
 
 ## Stack
-HTML/CSS/JavaScript estático, fontes locais.
+Vite + Three.js, HTML/CSS/JavaScript sem framework, fontes locais. Deploy na Vercel a cada push no `main`; repositório público.
 
 ## Público e autoria
-Mariana Rodrigues Fernandes; apresentação e leitura acadêmica de História da África.
+Linha do tempo de Mariana Rodrigues Fernandes para a disciplina de História da África, apresentada ao professor e aos colegas (projetor ou notebook) e aberta depois no celular. Mariana é autora do conteúdo histórico, dos textos, da seleção de documentos e das referências.
 
-## Requisitos recebidos do professor
-Dez eventos, processos ou momentos dentro de 3000 AEC–1482. Um parágrafo por marco, até 200 palavras, com descrição, fontes e relevância. O percurso deve constituir um argumento histórico e justificar a seleção e os intervalos.
+## Requisitos da atividade
+Dez eventos, processos ou momentos dentro de 3000 AEC–1482, com descrição, fontes e relevância, formando um argumento histórico. A ajuda de IA é permitida desde que avisada; o site declara a assistência nos créditos.
 
-## Recorte adotado
-639–1468, com dez marcos no Norte, Sahel e costa Suaíli. 1482 é limite da atividade, não evento ou encerramento geral das redes africanas.
+## Fonte de verdade do conteúdo
+O roteiro final de Mariana, "O Islã à beira do Deserto .pdf" (outubro de 2026, 19 páginas, na pasta do projeto). O texto é transcrito em `content.js` sem reescrita; só erros de digitação são corrigidos e listados para ela. Nada de fatos, datas ou fontes novos.
 
-## Argumento
-Redes comerciais e instituições islâmicas reorganizaram autoridade e vida urbana de maneiras distintas. Conquista, comércio, conversão e uniformidade social não são equivalentes.
+## Recorte e argumento
+Dez marcos de c. 613 (fuga para Axum) a c. 1440 (Timbuctu): o Islã chega à África acompanhando rotas comerciais já existentes, que passam a carregar seus costumes e sua religiosidade, do Mar Vermelho e do Egito ao Magrebe e ao Sahel.
 
-## Fontes e autoria
-A imagem é um enunciado, não uma bibliografia. Não atribuir referências à preferência do professor sem prova. Cada marco explicita relevância, fontes e limite interpretativo. Lacunas de seleção são distinguidas de limites documentais e hipóteses sobre financiamento.
+## Exigências do roteiro
+- Cores bege, marrom, dourado e azul; bordas com ornamentos da estética islâmica em vez de azul-marinho liso.
+- Abertura com fundo que representa a religião (referência: Caaba com nuvens e peregrinos em movimento) e o texto de introdução.
+- "Começar a viagem" anima a miniatura da caravana de peregrinos (Maqamat de al-Hariri, 1237), mantendo o estilo original.
+- No globo, rota linear entre lugares e momentos, com um camelo andando de um lugar ao outro; datas, não números, na linha do tempo.
+- Cada marco: texto curto e "Entender este marco" com os detalhes, citações e documento.
+- Depois de Mansa Musa, "Continuar viagem" mostra a animação do Atlas Catalão (Mansa Musa entregando a moeda ao homem no camelo) antes de voltar ao globo.
+- No último marco, "Finalizar viagem" abre a mandala islâmica em movimento com o texto final e o Alcorão 49:13; depois, "Ver referências".
+- Referências só no fim, com a indicação de onde cada uma foi usada; área com todos os documentos e imagens.
 
-O documento proíbe assistência externa; há divergência com a autorização de IA relatada antes. Manter declaração de assistência e condição de rascunho; Mariana precisa esclarecer a regra e revisar antes da entrega.
-
-## Interface
-Preservar autoria na abertura, atlas, animação da peregrinação com pausa, dez marcos navegáveis, filtros, modo leitura e apresentação, movimento reduzido e referências.
-
-## Compromissos confirmados em 09/09/2026
-
-Pedro pediu dez alternativas visuais interativas em Vite e Three.js para comparação, mantendo o original disponível. Referência de acabamento e interação: Apple. Público: Mariana, professor e colegas na apresentação acadêmica.
-
-Fotografias reais são obrigatórias, com elegância, espaço e créditos. O mapa deve representar a Terra em 3D com textura realista, substituindo o mapa estilizado rejeitado. Pedro rejeitou a paleta anterior e pediu cores mais coerentes, sem aparência genérica de IA; a direção comunicada é neutra, com cor concentrada nas fotografias e no globo.
-
-Navegação intuitiva e ausência de poluição visual têm prioridade. Animações por teclado devem ter o mesmo comportamento completo das acionadas por clique. Preservar o acesso ao argumento, às fontes e às justificativas dos intervalos.
+## Decisões de 19/10/2026 (Pedro)
+O comparador das dez alternativas visuais foi removido. A abertura usa ilustração própria animada (não a imagem de referência, de autoria desconhecida). Páginas "[conferir]" das referências são omitidas até Mariana completar. Commit local; push só com aprovação.
 
 ## Decisões abertas
-
-A alternativa final ainda será escolhida após comparação. As prévias não substituem a revisão histórica de Mariana nem representam aprovação acadêmica do conteúdo.
-
-## Refinamento posterior do fundo
-
-Pedro rejeitou o vazio excessivo do fundo neutro e enviou uma referência editorial com paisagem imersiva, tipografia grande e horizonte cromático natural. Preservar clareza, mas dar presença à abertura por meio de paisagem e profundidade. Ilustrações geradas precisam estar distinguidas das fotografias documentais.
-
-## Experiência guiada — solicitação mais recente
-
-Pedro pediu imersão na história africana, com exploração mais profunda dos elementos 3D e das imagens, e maior clareza para quem chega. A narrativa histórica é a experiência principal; o comparador das dez direções é secundário. Cada marco coordena data, argumento, fotografia contextual da região, cidades e câmera da Terra. O globo deve se integrar ao fundo com bordas suaves e transparência. As áreas de leitura e fontes mantêm continuidade com a direção escura da abertura; evitar páginas brancas desconectadas. A referência visual veio de https://uupm.cc/ e da captura enviada na conversa.
+Revisão final de Mariana sobre o conteúdo e as correções de digitação. Direitos de algumas imagens indicadas no roteiro (fotos de Tripadvisor, Agência Ecofin, Sotheby's e UNESCO) num site público.

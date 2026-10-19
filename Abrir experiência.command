@@ -6,11 +6,11 @@ from urllib.request import urlopen
 import subprocess
 
 port = 8777
-url = f'http://127.0.0.1:{port}/?v=1'
+url = f'http://127.0.0.1:{port}/'
 try:
     with urlopen(url, timeout=1) as response:
         existing = response.read(2048).decode('utf-8', 'replace')
-    if 'Entre areias e mar — uma história em movimento' in existing:
+    if 'O Islã à beira do deserto' in existing:
         subprocess.run(['open', url], check=False)
         raise SystemExit(0)
 except (OSError, TimeoutError):
@@ -19,7 +19,7 @@ try:
     server = ThreadingHTTPServer(('127.0.0.1', port), SimpleHTTPRequestHandler)
 except OSError:
     server = ThreadingHTTPServer(('127.0.0.1', 0), SimpleHTTPRequestHandler)
-url = f'http://127.0.0.1:{server.server_port}/?v=1'
+url = f'http://127.0.0.1:{server.server_port}/'
 print('Experiência da Mariana aberta no navegador. Mantenha esta janela aberta durante a visita.')
 subprocess.run(['open', url], check=False)
 try:
