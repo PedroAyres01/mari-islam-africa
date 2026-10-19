@@ -64,23 +64,4 @@ export function rosette({gold = '#c8a04a', ground = '#14223a', accent = '#2f7f86
   return `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="48" fill="${ground}" stroke="${gold}" stroke-width="1.4"/>${petals}<polygon points="${star8(50, 50, 18)}" fill="${cream}"/><polygon points="${star8(50, 50, 10)}" fill="${gold}"/></svg>`;
 }
 
-// Mandala final: camadas concêntricas que giram em sentidos opostos.
-export function mandalaSVG() {
-  const g = '#d4ad55', t = '#2f8f95', l = '#1d3a6b', c = '#efe2c6', r = '#8e3b2e';
-  const ring = (n, R, fn) => Array.from({length: n}, (_, i) => `<g transform="rotate(${(i * 360) / n} 500 500)">${fn(R)}</g>`).join('');
-  const petal = (R, w, len, fill, stroke) => `<path d="M500 ${500 - R}C${500 + w} ${500 - R + len * .35} ${500 + w * .6} ${500 - R + len * .85} 500 ${500 - R + len}C${500 - w * .6} ${500 - R + len * .85} ${500 - w} ${500 - R + len * .35} 500 ${500 - R}Z" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
-  const arch = (R, w, fill) => `<path d="M${500 - w} ${500 - R + 60}Q${500 - w} ${500 - R} 500 ${500 - R - 18}Q${500 + w} ${500 - R} ${500 + w} ${500 - R + 60}Z" fill="${fill}" stroke="${g}" stroke-width="2"/>`;
-  return `<svg viewBox="0 0 1000 1000" aria-hidden="true" focusable="false">
-  <defs><radialGradient id="mg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#22406f"/><stop offset="1" stop-color="#0d1a30"/></radialGradient></defs>
-  <circle cx="500" cy="500" r="498" fill="url(#mg)"/>
-  <g class="m-ring m-r1">${ring(32, 470, R => arch(R, 34, l))}${ring(32, 470, R => `<circle cx="500" cy="${500 - R + 28}" r="7" fill="${g}"/>`)}</g>
-  <g class="m-ring m-r2">${ring(24, 400, R => petal(R, 46, 120, t, g))}${ring(24, 400, R => petal(R - 18, 22, 70, c, 'none'))}</g>
-  <g class="m-ring m-r3">${ring(16, 290, R => petal(R, 62, 150, r, g))}${ring(16, 290, R => petal(R - 22, 32, 92, g, 'none'))}${ring(16, 290, R => `<polygon points="${star8(500, 500 - R - 22, 16)}" fill="${c}"/>`)}</g>
-  <g class="m-ring m-r4">${ring(12, 168, R => petal(R, 52, 110, l, g))}${ring(12, 168, R => petal(R - 14, 26, 70, t, 'none'))}</g>
-  <g class="m-ring m-r5"><polygon points="${star8(500, 500, 92)}" fill="${g}"/><polygon points="${star8(500, 500, 70)}" fill="${l}"/><polygon points="${star8(500, 500, 46)}" fill="${c}"/><polygon points="${star8(500, 500, 24)}" fill="${r}"/></g>
-  <circle cx="500" cy="500" r="496" fill="none" stroke="${g}" stroke-width="3"/>
-  <circle cx="500" cy="500" r="484" fill="none" stroke="${g}" stroke-opacity=".5" stroke-width="1.5"/>
-  </svg>`;
-}
-
 export {star8};

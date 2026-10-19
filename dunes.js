@@ -8,13 +8,7 @@ export function paintDunes(width = 1600, height = 1000) {
   let seed = 7;
   const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 
-  // céu
-  const sky = x.createLinearGradient(0, 0, 0, height * 0.42);
-  sky.addColorStop(0, '#7f9fba');
-  sky.addColorStop(0.6, '#bccbd0');
-  sky.addColorStop(1, '#ecdcbc');
-  x.fillStyle = sky;
-  x.fillRect(0, 0, width, height);
+  // o céu fica transparente (é um gradiente no CSS): só a areia vira grão
 
   // camadas, do fundo para a frente
   const layers = [
@@ -82,6 +76,7 @@ export function paintDunes(width = 1600, height = 1000) {
   const img = x.getImageData(0, 0, width, height);
   const d = img.data;
   for (let i = 0; i < d.length; i += 4) {
+    if (!d[i + 3]) continue;
     const n = (rnd() - 0.5) * 18;
     d[i] += n; d[i + 1] += n; d[i + 2] += n * 0.8;
   }

@@ -7,14 +7,18 @@ export const intro = {
   author: 'Mariana Rodrigues Fernandes',
   text: 'O Islã surgiu na península Arábica, no século VII, a partir da revelação feita a Muhammad (Maomé), um comerciante da região de Meca. A religião nasceu em uma sociedade comercial, o que deu ao Islã preceitos morais e práticos ligados ao comércio. O código islâmico oferecia a mercadores distantes uma identidade comum e sanções morais que sustentavam confiança e crédito. Dessa forma, as rotas, já existentes antes do Islã, começaram a carregar os costumes e a religiosidade islâmica, acompanhando caravanas pelo Saara.',
   invite: 'Venha acompanhar a viagem islâmica pelo Sahel!',
+  painting: './assets/doc/abertura-meca.webp',
+  video: './assets/video/abertura-meca.mp4',
+  alt: 'Pintura no estilo das miniaturas islâmicas: o pátio da Grande Mesquita de Meca ao amanhecer, com a Caaba ao centro, anéis de peregrinos de branco caminhando ao seu redor, pórticos com cúpulas, minaretes e nuvens douradas no céu.',
   refs: ['chiara', 'morais'],
 };
 
 export const caravan = {
   src: './assets/doc/maqamat-caravana.webp',
   video: './assets/video/caravana.mp4',
+  poster: './assets/doc/caravana-poster.jpg',
   title: 'Caravana de peregrinos',
-  caption: 'Maqamat de al-Hariri, 1237',
+  caption: 'Maqamat de al-Hariri, 1237 · animação gerada por IA (Veo) a partir do original',
   alt: 'Miniatura árabe de 1237: caravana de peregrinos com estandartes, tocadores de tambor e trombeta, camelos, um palanquim dourado e um cavaleiro sobre cavalo vermelho.',
 };
 
@@ -183,9 +187,10 @@ export const events = [
 export const atlasScene = {
   src: './assets/doc/atlas-catalao-mansa-musa.webp',
   video: './assets/video/atlas-mansa-musa.mp4',
+  poster: './assets/doc/atlas-poster.jpg',
   sheet: './assets/doc/atlas-catalao.webp',
   title: 'Mansa Musa no Atlas Catalão',
-  caption: 'Atlas Catalão, Maiorca, 1375 · atribuído a Abraão Cresques',
+  caption: 'Atlas Catalão, Maiorca, 1375 · atribuído a Abraão Cresques · animação gerada por IA (Veo) a partir do original',
   alt: 'Detalhe do Atlas Catalão: Mansa Musa, coroado e sentado no trono, estende uma moeda de ouro a um cavaleiro de turbante montado num camelo.',
 };
 

@@ -33,5 +33,8 @@ Dez marcos de c. 613 (fuga para Axum) a c. 1440 (Timbuctu): o Islã chega à Áf
 ## Decisões de 19/10/2026 (Pedro)
 O comparador das dez alternativas visuais foi removido. A abertura usa ilustração própria animada (não a imagem de referência, de autoria desconhecida). Páginas "[conferir]" das referências são omitidas até Mariana completar. Commit local; push só com aprovação.
 
+## Decisões de 19/10/2026, segunda rodada (Pedro)
+Caravana e Atlas viram imagens vivas: vídeos gerados no Google Flow (Veo) a partir das imagens originais. O efeito de partículas de areia fica nas dunas da cena da caravana, onde há areia de verdade. Abertura e mandala final com imagens geradas por IA (Nano Banana) para melhor acabamento visual. Toda imagem gerada é declarada como tal no site.
+
 ## Decisões abertas
 Revisão final de Mariana sobre o conteúdo e as correções de digitação. Direitos de algumas imagens indicadas no roteiro (fotos de Tripadvisor, Agência Ecofin, Sotheby's e UNESCO) num site público.

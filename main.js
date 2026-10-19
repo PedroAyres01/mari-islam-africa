@@ -1,7 +1,6 @@
 import './style.css';
 import {intro, caravan, events, atlasScene, finale, refs, refOrder} from './content.js';
-import {khatamTile, bandTile, bandTileV, rosette, mandalaSVG} from './ornaments.js';
-import {mountKaaba} from './kaaba.js';
+import {khatamTile, bandTile, bandTileV, rosette} from './ornaments.js';
 import {mountPainting} from './painting.js';
 import {paintDunes} from './dunes.js';
 
@@ -28,7 +27,8 @@ $('#atlas-caption').textContent = atlasScene.caption;
 $('#finale-text').textContent = finale.text;
 $('#finale-quote').textContent = `“${finale.quote}”`;
 $('#finale-cite').textContent = finale.cite;
-$('#mandala').innerHTML = mandalaSVG();
+// Mandala final: a roseta inteira gira devagar e o miolo gira ao contrário, como um caleidoscópio.
+$('#mandala').innerHTML = '<img class="m-disk" src="./assets/doc/mandala.webp" alt=""><img class="m-core" src="./assets/doc/mandala.webp" alt="">';
 
 $('#timeline').innerHTML = events.map((e, i) => `<li><button class="astro-mark" type="button" data-i="${i}" aria-label="${e.date}: ${e.title}"><span class="tick" aria-hidden="true"></span><span class="astro-date">${e.date}</span></button></li>`).join('');
 
@@ -41,13 +41,15 @@ $('#referencias-lista').innerHTML = refOrder.map(k => `<li id="ref-${k}"><p>${re
 
 // Documentos e imagens
 const docs = [
-  {src: caravan.src, caption: `${caravan.title} (${caravan.caption})`, where: 'Abertura da linha do tempo', source: null, note: 'Bibliothèque nationale de France, Arabe 5847'},
+  {src: caravan.src, caption: `${caravan.title} (Maqamat de al-Hariri, 1237)`, where: 'Abertura da linha do tempo', source: null, note: 'Bibliothèque nationale de France, Arabe 5847'},
   ...events.flatMap((e, i) => e.images.map(im => ({...im, where: `${i + 1}. ${e.title}`}))),
   {src: atlasScene.src, caption: `Detalhe do Atlas Catalão: Mansa Musa (1375)`, where: '8. O hajj de Mansa Musa', source: 'https://pt.wikipedia.org/wiki/Atlas_Catal%C3%A3o'},
 ];
 $('#docs').innerHTML = docs.map(d => `<figure class="doc"><div class="doc-img"><img src="${d.src}" alt="${(d.alt || d.caption).replace(/"/g, '&quot;')}" loading="lazy"></div><figcaption><span class="doc-where">${d.where}</span>${d.caption}${d.source ? ` <a href="${d.source}" target="_blank" rel="noreferrer">Fonte da imagem</a>` : d.note ? ` <span class="doc-note">${d.note}</span>` : ''}</figcaption></figure>`).join('');
 $('#credits').innerHTML = `<p>Conteúdo histórico, textos, seleção de documentos e referências: Mariana Rodrigues Fernandes.</p>
-<p>Site desenvolvido com auxílio de inteligência artificial (Claude, da Anthropic), como previsto na atividade. A ilustração da abertura, os ornamentos e a mandala foram desenhados em código para este site e não são documentos históricos. As animações da caravana e do Atlas Catalão movimentam as imagens originais. A rota no globo liga os lugares na ordem dos marcos e é esquemática.</p>
+<p>Site desenvolvido com auxílio de inteligência artificial (Claude, da Anthropic), como previsto na atividade.</p>
+<p>Gerado por IA para este site (não são documentos históricos): a pintura da abertura (Nano Banana, Google Flow) e sua animação (Veo, Google Flow); a mandala do final (Nano Banana, Google Flow); as animações da caravana (Maqamat, 1237) e do Atlas Catalão (1375), feitas pelo Veo a partir das imagens originais. Nessas animações a IA altera detalhes das obras; as imagens originais, sem alteração, estão nos documentos acima.</p>
+<p>Desenhado em código para o site: as bordas ornamentais, as dunas de areia e a rota no globo, que liga os lugares na ordem dos marcos e é esquemática.</p>
 <p>Texturas da Terra: exemplos do Three.js. Fontes tipográficas: Aref Ruqaa e Spectral (SIL Open Font License). Efeito de areia adaptado de “Sculpture Hero”, de guglielmogiannattasio.it.</p>`;
 
 // ---------- Navegação entre cenas ----------
@@ -77,7 +79,13 @@ function show(id, focusEl) {
 views.forEach(v => { const h = $('#' + v).querySelector('h1, h2'); if (h) h.tabIndex = -1; });
 
 // Abertura
-mountKaaba($('#kaaba'));
+// A pintura da abertura (gerada para o site) ganha vida em loop; com movimento reduzido, fica parada.
+(async () => {
+  const host = $('#kaaba');
+  // 1080p só onde a tela pede; celulares recebem 720p (bem mais leve)
+  const src = innerWidth * Math.min(devicePixelRatio, 2) >= 1600 ? intro.video : intro.video.replace('.mp4', '-720.mp4');
+  if (!reduced && await hasVideo(src)) mountVideo(host, {src, poster: intro.painting, alt: intro.alt, cover: true});
+})();
 
 // Caravana (Maqamat de al-Hariri, 1237). Se o vídeo animado existir, ele toca em loop;
 // senão, a própria pintura ganha movimento por regiões. Atrás, dunas feitas de areia.
@@ -101,10 +109,10 @@ async function hasVideo(url) {
   catch { return false; }
 }
 
-function mountVideo(host, {src, poster, alt}) {
+function mountVideo(host, {src, poster, alt, loop = true, cover = false}) {
   const v = document.createElement('video');
-  Object.assign(v, {src, poster, muted: true, loop: true, playsInline: true, autoplay: !reduced, preload: 'auto'});
-  v.className = 'scene-video';
+  Object.assign(v, {src, poster, muted: true, loop, playsInline: true, autoplay: !reduced, preload: 'auto'});
+  v.className = cover ? 'cover-video' : 'scene-video';
   v.setAttribute('aria-label', alt);
   host.append(v);
   return {destroy() { v.pause(); v.remove(); }, video: v};
@@ -116,7 +124,7 @@ async function openCaravan() {
   $('#dunes').innerHTML = '';
   dunesPainting = mountPainting($('#dunes'), {source: paintDunes(1600, 1000), alt: '', fit: 'cover', intro: true, introMs: 2800, pointerTarget: $('#caravana')});
   caravanPainting = (await hasVideo(caravan.video))
-    ? mountVideo($('#caravana-art'), {src: caravan.video, poster: caravan.src, alt: caravan.alt})
+    ? mountVideo($('#caravana-art'), {src: caravan.video, poster: caravan.poster, alt: caravan.alt})
     : mountPainting($('#caravana-art'), {src: caravan.src, alt: caravan.alt, warps: caravanWarps, intro: false, interactive: false});
 }
 
@@ -149,7 +157,15 @@ async function openAtlas() {
   const useVideo = await hasVideo(atlasScene.video);
   const start = () => {
     art.classList.add('zoomed');
-    if (useVideo) { atlasPainting = mountVideo(art, {src: atlasScene.video, poster: atlasScene.src, alt: atlasScene.alt}); return; }
+    if (useVideo) {
+      atlasPainting = mountVideo(art, {src: atlasScene.video, poster: atlasScene.poster, alt: atlasScene.alt, loop: false});
+      // ao terminar a entrega da moeda, oferece rever a cena (teclado e toque)
+      const v = atlasPainting.video, again = $('#atlas-replay');
+      again.hidden = true;
+      v.addEventListener('ended', () => { again.hidden = false; });
+      again.onclick = () => { again.hidden = true; v.currentTime = 0; v.play(); };
+      return;
+    }
     atlasPainting = mountPainting(art, {src: atlasScene.src, alt: atlasScene.alt, warps: atlasWarps, intro: false, interactive: false});
     const coin = $('#coin');
     const src = new Image();
@@ -230,7 +246,7 @@ $('#timeline').addEventListener('click', e => { const b = e.target.closest('.ast
 $('#see-refs').onclick = () => show('referencias');
 $('#restart').onclick = () => { current = -1; globe?.reset(); show('abertura', $('#start')); };
 $('#go-home').onclick = () => { current = -1; globe?.reset(); show('abertura', $('#start')); };
-$('.skip').onclick = e => { e.preventDefault(); show('referencias'); };
+$('.skip').onclick = e => { e.preventDefault(); $('#' + view).querySelector('h1, h2')?.focus(); };
 
 document.addEventListener('keydown', e => {
   if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || view !== 'viagem') return;

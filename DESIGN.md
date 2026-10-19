@@ -1,229 +1,312 @@
 ---
-name: Entre areias e mar
-description: Narrativa africana guiada sobre Terra realista, fotografia regional e leitura acadêmica.
+name: O Islã à beira do deserto
+description: Linha do tempo em dez marcos lida como manuscrito iluminado em movimento, com o globo lido como astrolábio.
 colors:
-  paper: "#192127"
-  ink: "#f2efe9"
-  panel: "#202a32"
-  comparator: "#141c22"
-  footer: "#121a20"
-  reading-text: "#d5d9db"
-  stage-paper: "#202329"
-  stage-ink: "#f8f5f0"
-  journey-text: "#e8e9e9"
-  city-surface: "#14202ade"
-  city-text: "#f5eee2"
+  lapis-950: "#0b1526"
+  lapis-900: "#0e1a2e"
+  lapis-800: "#14223a"
+  sand-50: "#f6efe0"
+  sand-100: "#f1e6cf"
+  sand-200: "#eadcc0"
+  sand-300: "#d9c49b"
+  paper-top: "#efe3c8"
+  paper-bot: "#e5d3b0"
+  sepia-900: "#2a1a0d"
+  sepia-700: "#4a2f1a"
+  brown-500: "#7a5230"
+  gold-600: "#a8822f"
+  gold-500: "#c8a04a"
+  gold-300: "#e6cb8a"
+  turq-500: "#2f7f86"
 typography:
   display:
-    fontFamily: "Barlow, Arial, sans-serif"
-    fontSize: "clamp(64px, 6.6vw, 96px)"
-    fontWeight: 500
-    lineHeight: 0.99
-    letterSpacing: "-.035em"
-  journey-title:
-    fontFamily: "Barlow, Arial, sans-serif"
-    fontSize: "clamp(42px, 4.4vw, 64px)"
-    fontWeight: 500
-    lineHeight: 1.03
-    letterSpacing: "-.035em"
+    fontFamily: "Aref Ruqaa, Spectral, Georgia, serif"
+    fontSize: "clamp(2.4rem, 4.4vw, 4.1rem)"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "-.01em"
   headline:
-    fontFamily: "Spectral, Georgia, serif"
-    fontSize: "42px"
+    fontFamily: "Aref Ruqaa, Spectral, Georgia, serif"
+    fontSize: "clamp(2.2rem, 4vw, 3.6rem)"
+    fontWeight: 700
+    lineHeight: 1.05
+  title:
+    fontFamily: "Aref Ruqaa, Spectral, Georgia, serif"
+    fontSize: "clamp(2rem, 3.1vw, 3rem)"
+    fontWeight: 700
+    lineHeight: 1.08
+  scene-title:
+    fontFamily: "Aref Ruqaa, Spectral, Georgia, serif"
+    fontSize: "clamp(1.6rem, 2.6vw, 2.3rem)"
+    fontWeight: 700
+    lineHeight: 1.1
+  subhead:
+    fontFamily: "Aref Ruqaa, Spectral, Georgia, serif"
+    fontSize: "1.5rem"
+    fontWeight: 700
+    lineHeight: 1.2
+  date:
+    fontFamily: "Aref Ruqaa, Spectral, Georgia, serif"
+    fontSize: "1.45rem"
     fontWeight: 400
-    lineHeight: 1.18
-    letterSpacing: "-.025em"
-  subtitle:
-    fontFamily: "Spectral, Georgia, serif"
-    fontSize: "23px"
-    lineHeight: 1.4
+    lineHeight: 1.2
   body:
     fontFamily: "Spectral, Georgia, serif"
-    fontSize: "18px"
-    lineHeight: 1.7
-  journey-body:
-    fontFamily: "Arial, sans-serif"
-    fontSize: "14px"
+    fontSize: "17px"
+    fontWeight: 400
     lineHeight: 1.6
-  control:
-    fontFamily: "Arial, sans-serif"
-    fontSize: "12px"
+  reading:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "1.08rem"
+    fontWeight: 400
+    lineHeight: 1.75
+  label:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: ".98rem"
+    fontWeight: 600
+    letterSpacing: ".01em"
+  caption:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: ".9rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  tag:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: ".8rem"
+    fontWeight: 600
+    lineHeight: "22px"
+    letterSpacing: ".02em"
 rounded:
-  primary: "50px"
-  navigation: "40px"
-  chip: "30px"
-  current: "4px"
-  city: "3px"
-  select: "6px"
+  filet: "2px"
+  plate: "3px"
+  medallion: "50%"
 spacing:
-  gap-small: "8px"
-  inset-small: "12px"
-  inset: "16px"
-  inset-large: "24px"
-  reading-gap: "28px"
+  band: "clamp(18px, 2.6vw, 36px)"
+  gap: "12px"
+  gap-wide: "16px"
+  cartouche-pad: "clamp(24px, 3vw, 40px)"
+  folio-pad: "clamp(20px, 5vw, 72px)"
 components:
-  button-primary:
-    backgroundColor: "{colors.stage-ink}"
-    textColor: "{colors.stage-paper}"
-    rounded: "{rounded.primary}"
-    padding: "17px 23px"
-  button-primary-mobile:
-    backgroundColor: "{colors.stage-ink}"
-    textColor: "{colors.stage-paper}"
-    rounded: "{rounded.primary}"
-    padding: "14px 20px"
-  button-secondary:
+  button-gold:
+    backgroundColor: "{colors.gold-500}"
+    textColor: "{colors.sepia-900}"
+    typography: "{typography.label}"
+    rounded: "{rounded.plate}"
+    padding: "0 1.4rem"
+    height: "48px"
+  button-quiet:
     backgroundColor: "transparent"
-    textColor: "{colors.stage-ink}"
-    padding: "8px 0"
-  navigation-button:
+    textColor: "{colors.sepia-700}"
+    typography: "{typography.label}"
+    rounded: "{rounded.plate}"
+    padding: "0 1.4rem"
+    height: "48px"
+  button-quiet-on-lapis:
     backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.navigation}"
-    padding: "0 20px"
-  timeline-current:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.current}"
-    padding: "8px 4px"
-  photo-chip:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.chip}"
-    padding: "0 18px"
-  photo-chip-selected:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.chip}"
-    padding: "0 18px"
-  city:
-    backgroundColor: "{colors.city-surface}"
-    textColor: "{colors.city-text}"
-    rounded: "{rounded.city}"
-    padding: "8px 12px"
-  comparator-select:
-    backgroundColor: "{colors.comparator}"
-    textColor: "#f6f5f2"
-    rounded: "{rounded.select}"
-    padding: "8px"
+    textColor: "{colors.sand-100}"
+    rounded: "{rounded.plate}"
+    height: "48px"
+  masthead-plate:
+    backgroundColor: "{colors.lapis-900}"
+    textColor: "{colors.gold-300}"
+    rounded: "{rounded.plate}"
+    padding: "0 16px"
+    height: "44px"
+  cartouche:
+    backgroundColor: "{colors.paper-top}"
+    textColor: "{colors.sepia-900}"
+    padding: "{spacing.cartouche-pad}"
+  folio:
+    backgroundColor: "{colors.paper-top}"
+    textColor: "{colors.sepia-900}"
+    padding: "{spacing.folio-pad}"
+  astro-step:
+    backgroundColor: "{colors.gold-500}"
+    textColor: "{colors.sepia-900}"
+    rounded: "{rounded.medallion}"
+    size: "44px"
+  astro-scale:
+    backgroundColor: "{colors.gold-500}"
+    textColor: "{colors.sepia-900}"
+    rounded: "{rounded.plate}"
+    height: "64px"
+  astro-mark-current:
+    textColor: "{colors.sand-50}"
+  place-tag:
+    backgroundColor: "{colors.lapis-900}"
+    textColor: "{colors.sand-100}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.filet}"
+    padding: "0 8px"
+  place-tag-current:
+    backgroundColor: "{colors.gold-300}"
+    textColor: "{colors.sepia-900}"
 ---
 
-# Design System: Entre areias e mar
+# Design System: O Islã à beira do deserto
 
 ## Overview
 
-**Creative North Star: "Narrativa africana guiada"**
+**Creative North Star: "O Manuscrito Iluminado em Viagem"**
 
-Uma narrativa africana guiada: o argumento histórico ocupa o primeiro plano, a Terra estabelece relações espaciais e as fotografias atuais contextualizam regiões. A paisagem de dunas dá presença à abertura; carvão e azul-noite sustentam a continuidade até leitura, bibliografia e rodapé. A autoria de Mariana Rodrigues Fernandes permanece visível.
+A viagem é um códice aberto sobre lápis-lazúli. Cada tela é uma página emoldurada por iluminura: uma única moldura de tapete, fixa, envolve todas as cenas (banda de cartuchos com estrelas de oito pontas e rosetas nos cantos), e dentro dela o conteúdo alterna entre dois materiais: o campo de lápis-lazúli, onde vivem o globo, as pinturas animadas e a mandala, e o papel de areia, onde se lê. O texto de Mariana nunca flutua solto sobre imagem; sempre está num papel com filete de ouro.
 
-Este registro descreve a implementação atual, não uma aprovação definitiva. Horizonte africano é a abertura padrão (`v=1`); a escolha final entre dez alternativas permanece aberta. As rejeições confirmadas são branco vazio, verde/bege como direção dominante e mapa estilizado como representação principal. Não houve comp ou seed retroativo; nenhum é alegado ou exigido aqui.
+O globo é lido como astrolábio: a rete dourada gira em volta da Terra, e a linha do tempo é uma régua de latão gravada, com datas em vez de números e uma alidade que desliza até o marco atual. O ouro é metal, não tinta de destaque: aparece em filetes, bandas, rete, régua, medalhões e no botão principal. A densidade é de leitura acadêmica: colunas de 62 a 78 caracteres, entrelinha generosa, capitular no início de cada fólio.
+
+O movimento serve à matéria: a pintura da abertura respira em loop, a areia das dunas se espalha sob o cursor, o camelo anda pela rota, a tinta "assenta" quando um marco troca, a mandala gira devagar. Com movimento reduzido, tudo fica parado e legível.
 
 **Key Characteristics:**
-
-- Terra realista com bordas transparentes e cidades localizáveis.
-- Três fotografias regionais creditadas e uma ilustração de dunas identificada como IA.
-- Narrativa, leitura e fontes na mesma continuidade escura.
-- Navegação histórica em linha própria do viewport; comparador secundário oculto.
-
-Evidência: `main.js` (montagem e estados), `style.css` (cascata completa), `scene.js` (materiais e movimento), `PRODUCT.md`; `package.json` confirma Vite + Three.js, além de HTML/CSS/JS e fontes locais. `events.json` confirma dez marcos de 639–642 até 1468. Capturas fornecidas e inspecionadas: `/private/tmp/mari-review/final-intro.png`, `final-desktop.png`, `final-tablet.png`, `final-mobile.png`, `final-reading.png`. A última ainda mostra o palco no mobile, não a seção de leitura. Comportamentos abaixo foram extraídos do código; este passe não executou nova validação funcional.
+- Uma moldura de tapete fixa (banda + rosetas) em todas as cenas; o conteúdo vive dentro dela.
+- Dois materiais: campo de lápis-lazúli com trama khatam em ouro; papel de areia com trama khatam em sépia.
+- Toda superfície de leitura é papel com filete duplo de ouro (iluminura), nunca vidro ou card neutro.
+- Ouro como metal: filetes, rete, régua, medalhões e o botão principal.
+- Títulos em Aref Ruqaa; todo o texto corrido e os controles em Spectral.
+- Proveniência declarada: o que é gerado por IA ou desenhado em código está dito nos créditos.
 
 ## Colors
 
-### Primary
+Paleta de manuscrito: lápis-lazúli de fundo, papel de areia de leitura, sépia de tinta, ouro de metal e turquesa de azulejo só dentro do ornamento.
 
-O CTA inverte tinta e superfície locais; não existe uma cor de marca saturada universal. Dentro da abertura principal, `stage-ink` e `stage-paper` prevalecem sobre `ink` e `paper` do documento. O frontmatter distingue esses escopos em vez de promover as declarações antigas de verde e bege.
+### Primary
+- **Ouro de Iluminura** (gold-500): o metal do sistema. Filetes internos de todo papel, bandas da moldura, rete do globo, régua do astrolábio, medalhões de navegação, rota concluída no globo, fios das citações e base do gradiente do botão principal.
+- **Ouro Pálido** (gold-300): ouro iluminado. Texto sobre lápis (marca no cabeçalho, títulos das cenas de pintura), etiqueta do lugar atual no globo, anel de foco e seleção de texto.
+- **Ouro Velho** (gold-600): ouro em sombra. Barra de rolagem; sua variante translúcida desenha os filetes divisórios e o filete externo dos papéis.
+
+### Secondary
+- **Turquesa de Azulejo** (turq-500): acento raro, vive só dentro do ornamento desenhado em código (cartuchos da banda, pétalas alternadas das rosetas). Não é usado em texto, controles ou superfícies.
 
 ### Neutral
+- **Lápis-Lazúli Noturno** (lapis-950): fundo do final, base dos gradientes radiais das cenas de globo e pintura.
+- **Lápis-Lazúli** (lapis-900): cor de página padrão do corpo e da página de referências; fundo das placas translúcidas (cabeçalho, etiquetas, barra da caravana); ponta da alidade.
+- **Lápis-Lazúli Claro** (lapis-800): centro dos gradientes radiais, chão da banda ornamental, cor de tema do navegador, traço dos marcos já percorridos na régua.
+- **Papel de Areia, Topo / Base** (paper-top / paper-bot): os dois extremos do gradiente vertical de todo papel (cartucho, painel do marco, fólio, referências, cartão final).
+- **Areia** (sand-50, sand-100, sand-200, sand-300): texto claro sobre lápis (sand-100 padrão, sand-200 legendas em itálico, sand-300 dicas), fundo da abertura antes do vídeo (sand-200), data atual gravada na régua (sand-50) e fundo de espera das figuras (sand-300).
+- **Tinta Sépia** (sepia-900): texto corrido sobre papel e texto sobre ouro.
+- **Sépia de Título** (sepia-700): títulos, legendas e botões discretos sobre papel.
+- **Castanho de Rubrica** (brown-500): datas, capitular, assinatura, links, citações atribuídas e notas de uso sobre papel. Contraste de cerca de 5:1 sobre o papel.
 
-`paper` sustenta o corpo e a barra histórica; `panel`, bibliografia e moldura fotográfica; `comparator`, o comparador; `footer`, o encerramento. `ink` é a tinta geral, `reading-text` o texto de apoio e `journey-text` o argumento sobre a fotografia. `city-surface` e `city-text` pertencem aos botões ancorados no globo. O foco é laranja funcional, registrado no sidecar, não uma nova paleta de marca. A propriedade `--accent` final existe, mas não tem consumo encontrado no CSS; não foi promovida a token normativo.
+### Named Rules
+**The Two Grounds Rule.** Só existem dois chãos: lápis-lazúli (cenas, globo, imagem) e papel de areia (leitura). Texto longo só se assenta no papel; sobre lápis, apenas títulos curtos, legendas e controles.
 
-**The Continuidade editorial Rule.** Abertura, leitura e fontes compartilham superfícies escuras; a cor descritiva vem das fotografias e da Terra.
+**The Metal Rule.** Ouro é metal aplicado: filete, banda, régua, medalhão, botão principal. Sobre papel, o ouro nunca vira cor de texto; a hierarquia no papel é sépia e castanho.
+
+**The Tile Accent Rule.** A turquesa existe só dentro do ornamento desenhado em código. Fora dele, nenhum texto, botão ou fundo é turquesa. (A mandala gerada por IA é imagem e tem a paleta própria.)
 
 ## Typography
 
-**Display Font:** Barlow, com Arial/sans-serif de fallback, carregada de `/assets/display-0.ttf`.
-**Body Font:** Spectral, com Georgia/serif de fallback, carregada de `/assets/text-0.ttf`.
-**Label Font:** Arial/sans-serif nos controles e textos utilitários. Existem duas fontes locais, mas três famílias efetivamente declaradas; não descrever tudo como Barlow + Spectral.
+**Display Font:** Aref Ruqaa (com Spectral, Georgia, serif)
+**Body Font:** Spectral (com Georgia, serif)
+
+**Character:** Aref Ruqaa é caligrafia ruqʿa latinizada, com o traço de pena de um manuscrito; Spectral é uma serifa de leitura de tela, sóbria, com itálico verdadeiro. As duas fontes são locais (`public/assets/fonts/`), sob SIL Open Font License, e Aref Ruqaa bold e Spectral regular são pré-carregadas.
 
 ### Hierarchy
+- **Display** (Aref Ruqaa 700, clamp(2.4rem, 4.4vw, 4.1rem), 1.05): só o título da abertura no cartucho, em sépia-700, com `text-wrap: balance`.
+- **Headline** (Aref Ruqaa 700, clamp(2.2rem, 4vw, 3.6rem), 1.05): título do fólio "Entender este marco"; a página de referências usa a mesma voz um degrau abaixo (clamp(2rem, 3.6vw, 3rem)).
+- **Title** (Aref Ruqaa 700, clamp(2rem, 3.1vw, 3rem), 1.08): título do marco no painel do globo.
+- **Scene title** (Aref Ruqaa 700, clamp(1.6rem, 2.6vw, 2.3rem), 1.1): títulos das cenas de pintura, em ouro pálido sobre lápis.
+- **Subhead** (Aref Ruqaa 700, 1.5rem, 1.2): nome do documento dentro do fólio.
+- **Date** (Aref Ruqaa 400, 1.45rem, 1.2): datas abaixo dos títulos, em castanho. As datas gravadas na régua usam Aref Ruqaa 700 a 1.05rem.
+- **Body** (Spectral 400, 17px, 1.6; 16px no celular): texto padrão; o texto do cartucho e do marco sobe para 1.02rem/1.65, máximo 62ch.
+- **Reading** (Spectral 400, 1.08rem, 1.75): texto longo do fólio, máximo 68ch, com hifenização e `text-wrap: pretty`. O primeiro parágrafo abre com capitular em Aref Ruqaa 700 a 3.6em, castanho.
+- **Label** (Spectral 600, .98rem, .01em): botões.
+- **Caption** (Spectral 400, .9rem, 1.55): legendas de figura, créditos, nota de uso das referências (em itálico castanho).
+- **Tag** (Spectral 600, .8rem, linha de 22px, .02em): nomes de lugar no globo.
 
-Os tokens registram abertura, título de marco, títulos de leitura, subtítulo, corpo editorial e controles. A abertura usa o clamp `display`; durante a viagem, `journey-title` limita a linha a 13ch. No tablet (601–1050px), o título de marco tem 58px/18ch; no mobile (até 600px), 44px/14ch. Abertura: 70px no tablet e 64px no mobile. Subtítulo de marco: 19px, reduzido a 17px no mobile.
+### Named Rules
+**The Pen and Press Rule.** Aref Ruqaa só para o que seria escrito à pena: títulos, datas, convite, capitular, citação final e "FIM". Todo parágrafo, legenda e controle é Spectral.
 
-Leitura: 18px/1.7 e 65ch; até 900px cai a 16px e até 600px passa a 17px. No intervalo tablet a largura máxima é 68ch. Títulos de leitura e lugares: 42px, 34px até 900px para leitura e até 600px para lugares. Bibliografia: título 36px/1.2, itens 14px/1.7 e notas 12px. Datas da barra: informação funcional pequena, não um padrão recomendado de legibilidade.
-
-**The Duas vozes editoriais Rule.** Barlow conduz os grandes títulos; Spectral acompanha subtítulos e leitura. Arial atende aos controles e textos utilitários existentes.
+**The Quote Voice Rule.** Citações do fólio são Spectral itálico (1.12rem, 1.7) entre dois filetes de ouro com uma estrela de oito pontas no topo; a atribuição é Spectral 600 castanho, sem itálico.
 
 ## Layout
 
-O corpo ocupa 100dvh com overflow bloqueado. O contêiner principal é flex vertical: cabeçalho de 88px (80px no mobile), conteúdo com scroll interno e barra histórica fora desse scroll. Esta barra parece fixa, mas não usa uma sobreposição `position:fixed`: ocupa uma linha própria com mínimo de 96px, ou 116px no mobile. O comparador aberto acrescenta outra linha e reduz a área disponível.
+Cada cena ocupa a viewport inteira (`position: fixed`), recuada pela banda da moldura (`--band`, clamp(18px, 2.6vw, 36px)); todo deslocamento interno é calculado a partir dela (`calc(var(--band) + …)`). As cenas trocam por crossfade, sem rolagem entre elas; dentro de cada cena há rolagem própria quando o conteúdo pede (fólio, referências, abertura no celular).
 
-Desktop: texto de abertura com 48% da largura, recuo de 6vw e cena a partir de 43%. O palco final usa `calc(100dvh - 205px)`, mínimo 690px; há máximo herdado de 920px. Tablet: mínimo 1040px, texto acima e globo abaixo, com cena de viagem em `460px 4% 95px`. Mobile: mínimo 930px, texto com recuos laterais de 24px e cena em `480px 0 105px`. Portanto o globo não cabe integralmente no primeiro viewport mobile/tablet; o scroll revela o restante. As capturas confirmam esse corte inicial, não uma sobreposição da barra.
+- **Abertura:** pintura em tela cheia (enquadramento 62% 50%), cartucho de papel à esquerda, centralizado na vertical, largura min(33rem, 40vw).
+- **Globo:** globo deslocado para a direita (centro em 66% × 45%), painel do marco à esquerda (min(31rem, 33vw)), régua do astrolábio ancorada na base, entre os dois medalhões.
+- **Fólio:** página de papel de até 1200px, grade de texto e figuras em 1.35fr / 1fr, com as figuras fixas (`sticky`) ao lado do texto.
+- **Referências:** página de papel de até 1100px, lista com filetes entre itens, grade de documentos `auto-fill` com mínimo de 230px e células 4:3.
+- **Final:** mandala centralizada maior que a tela (max(118vmin, 760px)), cartão centralizado por cima.
 
-A barra tem padding 12px 4vw e gap 20px no desktop; 8px 16px e gap 4px no mobile. A linha do tempo rola horizontalmente: botões com mínimo de 62px de largura, 52px no mobile, e alvos mobile de pelo menos 44px de altura. Anterior/próximo ocupam a segunda linha no mobile.
+Ritmo: espaçamento contínuo por `clamp()` em vez de escala fixa; vãos entre controles de 12px, entre grupos de 16 a 24px, padding interno dos papéis entre 22 e 72px.
 
-Leitura em grade 1fr/1.25fr com gap 10vw e margens 100px 8vw 120px; tablet e mobile empilham. Lugares usam 1fr/1.5fr, gap 7vw e fotografia com proporção 1.5. Bibliografia em duas colunas, gap 7vw, itens até 60ch; uma coluna até 1050px. Seus recuos são 56px 5vw, passando a 24px no mobile. Há recorrência de 8/12/16/24/28px, mas não uma escala universal de 4pt: valores de 17px, 23px, vw e ch também são reais.
+**Responsivo.** Até 1050px o fólio vira uma coluna e as figuras passam para uma grade abaixo do texto. Até 820px ou em retrato (aspect-ratio ≤ 4/5) tudo empilha: a pintura da abertura fica `sticky` em 64dvh (enquadramento 88% 50%) e o cartucho sobe por cima dela; o globo vira uma faixa de min(56dvh, 110vw) sangrando até a moldura, seguido da régua e do painel; os botões da barra de cena ocupam a largura toda. Até 480px o cabeçalho e o cartão final se compactam.
 
 ## Elevation & Depth
 
-A interface principal usa planos tonais e filetes; o comparador final tem sombra e blur desativados. A sombra e o vidro presentes em regras anteriores foram sobrescritos, não são tokens vigentes. No globo principal, o renderer possui alpha; a Terra usa opacidade .92, `depthWrite:false` e desvanecimento de borda com `smoothstep(0.02, 0.48, ...)`. A atmosfera é uma casca azul transparente de intensidade `rim*0.32`. Texturas contemporâneas de cor, normal e especular dão relevo e resposta à luz.
+Profundidade de iluminura, não de interface: cada papel e cada figura é emoldurado por anéis concêntricos (filete de ouro, faixa de papel, filete de ouro velho), desenhados com `box-shadow inset` ou anéis externos, e repousa sobre o lápis com uma sombra ambiente larga e difusa. Não há sombras duras nem deslocadas. Os metais (botão de ouro, medalhões, régua) têm volume por gradiente vertical ou radial e um realce interno de 1px.
 
-A fotografia regional entra com opacidade .65 sob proteção em gradiente horizontal; no mobile a proteção é vertical. Ver fotografia leva a imagem a opacidade 1 e oculta a cena. Esses gradientes protegem a leitura; não são proibidos. Sobreposições e parâmetros exatos estão no sidecar.
+### Shadow Vocabulary
+- **Moldura de iluminura** (`inset 0 0 0 1px #c8a04a, inset 0 0 0 6px #efe3c8, inset 0 0 0 7px rgba(168,130,47,.6)`): cartucho, painel do marco e cartão final.
+- **Moldura de figura** (`0 0 0 1px #c8a04a, 0 0 0 5px #efe3c8, 0 0 0 6px rgba(168,130,47,.55), 0 14px 30px rgba(42,26,13,.25)`): imagens de documento dentro do fólio.
+- **Moldura de pintura** (`0 0 0 1px #c8a04a, 0 0 0 6px rgba(14,26,46,.6), 0 0 0 7px rgba(200,160,74,.55), 0 22px 50px rgba(0,0,0,.5)`): vídeos da caravana e do Atlas sobre lápis.
+- **Repouso sobre lápis** (`0 18px 40px` a `0 24px 60px`, preto ou sépia a .28–.5): sombra ambiente de todo papel.
+- **Moldura da página** (filete de ouro + 3px de lápis + filete de ouro translúcido, por dentro da banda): o fio interno da moldura de tapete.
 
-**The Profundidade geográfica Rule.** A profundidade vem da Terra, da transparência e da fotografia; gradientes de proteção de texto e atmosfera pertencem a este mundo.
+### Named Rules
+**The Illumination Frame Rule.** Toda superfície de leitura e toda figura histórica ganha moldura de anéis concêntricos (ouro, papel, ouro velho). Uma superfície sem esse filete não pertence ao sistema.
 
 ## Shapes
 
-CTA principal em cápsula, navegação também arredondada, filtros fotográficos em pílulas. A seleção histórica tem cantos discretos; cidade, retângulo compacto. Os raios normativos estão no frontmatter. Fotografias e painéis editoriais permanecem retangulares; não há regra de arredondar todas as superfícies. Filetes delimitam navegação e ações secundárias.
+Formas de manuscrito e instrumento: retângulos com cantos quase retos (3px em botões, cabeçalho e régua; 2px nas etiquetas e no anel de foco; papéis com canto vivo), e círculos só para objetos de metal ou de cosmos (medalhões de navegação, mandala, moedas, globo). A geometria ornamental é a estrela de oito pontas (khatam): na trama de fundo (ladrilho de 72px), na banda, no centro das rosetas e no fecho das citações. A alidade é um triângulo recortado por `clip-path`.
 
 ## Components
 
 ### Buttons
+Placas de metal, sóbrias e táteis.
+- **Shape:** cantos quase retos (3px), altura mínima de 48px, padding horizontal de 1.4rem.
+- **Gold (principal):** gradiente vertical de ouro (#e3c378 → gold-500 → #b18a39) com filete interno claro, anel de ouro e filete escuro, e sombra curta; texto sepia-900 em Spectral 600. Um por grupo de ações, sempre a ação de avançar ("Começar a viagem", "Seguir a caravana", "Continuar viagem", "Ver referências").
+- **Hover / Active:** o gradiente clareia e o botão sobe 1px; no clique, volta. Transição de 200ms com a curva ease-out do sistema.
+- **Quiet (secundário):** fundo transparente com filete interno de 1px em ouro; texto sepia-700 no papel, sand-100 sobre lápis; no hover, véu de ouro a 14%.
+- **Focus:** anel de 2px em ouro pálido, afastado 3px.
 
-O CTA começa em “Começar a viagem”, muda para “Continuar a viagem” e encerra com “Concluir o argumento”, que rola até a leitura. Tem 13px no desktop e 12px no mobile; hover de 200ms com deslocamento de -2px e brilho 1.08 somente para ponteiro fino com hover. Ações secundárias têm filete inferior e alvo de 44px. Foco de botões, links e select: contorno de 3px, offset 4px. Desabilitados usam opacidade .35.
+### Masthead plate
+Placa de lápis translúcido (82%, com desfoque de 6px) e filete de ouro, com o nome do site em Aref Ruqaa 700 em ouro pálido; leva de volta à abertura. Some na abertura e quando a página rola.
 
-### Chips
+### Cartucho de papel
+O papel da abertura, do painel do marco e do cartão final: gradiente de papel quase opaco (97 a 98%) com trama khatam em sépia, moldura de iluminura e sombra de repouso. Ao trocar de marco, os filhos do painel entram com "tinta assentando" (opacidade, desfoque de 3px → 0 e 6px de subida, 600ms, escalonados em 40ms).
 
-Kilwa, Cairo e Timbuctu selecionam a fotografia com `aria-pressed`, sem representar filtros históricos. A seleção inverte as cores do corpo; a altura mínima é 44px. Não há campo de busca ou filtro de regiões implementado neste escopo.
+### Régua do astrolábio com alidade
+A linha do tempo é uma barra de latão (gradiente vertical de ouro, realce de 1px em cima, sombra de 1px embaixo) com escala de traços finos a cada 9px e um traço maior por data. As datas são gravadas em Aref Ruqaa 700 sepia-900; o marco atual ganha um véu escuro de lápis e data em sand-50; marcos percorridos ganham traço mais longo e grosso em lapis-800. A alidade, um triângulo de lápis no topo, desliza até a data atual em 700ms. A régua rola na horizontal com snap e fica entre dois medalhões de ouro (44px, gradiente radial) com chevrons em SVG; nos extremos, o medalhão desativado cai para 35% de opacidade.
 
-### Cards / Containers
+### Rete
+Anel ornamental em SVG em volta do globo (2,32 × o raio): dois círculos de ouro, marcas de graduação e doze chamas. Opacidade de 50%, gira 1,4s a cada troca de marco, nunca recebe ponteiro.
 
-Fotografia dos lugares em moldura tonal com padding de 16px, 10px no mobile. Bibliografia tem painel retangular e links para registros institucionais/bibliográficos. O percurso detalhado inclui parágrafo, justificativa da conexão, interpretação do intervalo e referência; o link do marco aponta para a primeira referência, embora seu texto enumere todas.
+### Place-tag
+Etiqueta de lugar ancorada no globo: placa de lápis a 78% com filete de ouro a 45%, cantos de 2px, Spectral 600 a .8rem em sand-100. O lugar atual inverte para fundo ouro pálido com texto sepia-900, sem filete.
 
-### Inputs / Fields
+### Fólio
+A página "Entender este marco": papel opaco até 1200px com trama khatam e filete de ouro, cabeçalho separado por filete de ouro velho, capitular castanha no primeiro parágrafo, citações entre filetes com estrela, figuras com moldura de figura e legenda com link "Fonte da imagem", rodapé com as duas ações.
 
-Existe select nativo das dez alternativas, exibido no mobile dentro do comparador. Mantém borda, raio discreto e altura mínima de 44px; no desktop a seleção usa dez botões numerados. Não existem campos de entrada textual.
+### Moldura de tapete (site-frame)
+Uma camada fixa acima de todas as cenas, sem ponteiro: banda horizontal e vertical de 40px desenhada em código (chão lapis-800, dois pares de filetes de ouro, estrelas de oito pontas em ouro, cartuchos turquesa com miolo de areia), escalada para `--band`, com rosetas (shamsa de 16 pétalas ouro/turquesa e estrela central) sobrepostas nos quatro cantos e um filete interno ouro–lápis–ouro.
 
-### Navigation
+### Cenas de pintura
+Caravana e Atlas: barra de legenda abaixo da imagem (título em ouro pálido, legenda em itálico areia, ação à direita). Na caravana, as dunas desenhadas em código formam o chão sob um céu em gradiente, e a areia se espalha sob o cursor. O Atlas abre com a folha original se aproximando de Mansa Musa (2,4s) e então toca o vídeo.
 
-Dez marcos em ordem histórica, seleção por `aria-current`, anterior/próximo desabilitados nos extremos. Ações por clique, setas e números chamam `travel`, que sincroniza leitura, fotografia regional e câmera; 0 seleciona o décimo marco. Com comparador aberto, setas e números passam a selecionar alternativas. R repete o movimento. Eventos repetidos de teclado e modificadores são ignorados; inputs/selects/textareas não disparam atalhos.
+## Proveniência dos materiais visuais
 
-O comparador começa com `hidden`; “Comparar visuais” alterna sua visibilidade e `aria-expanded`. `v` na URL preserva a alternativa. Alternativas existentes: Horizonte africano, Atlas noturno, Pedra e memória, Areia e mar, Mesa cartográfica, Caderno de campo, Rede de cidades, Marés do Índico, Galeria do tempo e Linhas de poder. As quatro variantes globe/night/split/table têm Terra realista; as demais usam arcos, folhas, rede abstrata, ondas, fotografia plana ou faixas. Elas não são dez sistemas aprovados nem dez globos equivalentes.
+Registrada porque faz parte do sistema: toda nova imagem entra com a mesma declaração nos créditos.
 
-### Terra e imagens contextuais
-
-Cidades disponíveis no marco geram botões projetados no globo, com descarte dos que estão atrás ou colidem. Clique localiza a cidade; arraste gira a Terra sem inércia. Rotas são conexões esquemáticas. Fotografia depende da região: Cairo para Norte, Timbuctu para Sahel, Kilwa para costa suaíli; são três imagens reutilizadas, não dez registros específicos dos eventos. Créditos no código: Kilwa, Janetmpurdy, 2016, CC BY-SA 4.0; Cairo, Vyacheslav Argenberg, 2007, CC BY 4.0; Timbuctu, upyernoz, 2001, CC BY 2.0. Os links originais estão no rodapé. Dunas em `horizonte.png` são ilustração gerada por IA, explicitamente identificada no rodapé. Texturas da Terra são creditadas à distribuição de exemplos Three.js; Natural Earth é citado para geografia. Estas atribuições foram lidas no código, não auditadas externamente.
-
-A câmera histórica gira o grupo em 850ms com ease-out cúbico, por exigência explícita do usuário para teclado e clique. Não é duração universal de UI. O replay de abertura/troca de alternativa usa 400ms, ease-out quártico. Opacidade de cena: 250ms; imagem: 350ms. Não há autoloop: requestAnimationFrame termina em t=1. Arraste cancela a animação corrente. Não existe botão dedicado de pausa/retomada de peregrinação.
-
-Movimento reduzido do sistema elimina transições/animações CSS e scroll suave; o JS aplica o destino da câmera sem interpolação quando reduzido. O botão manual só altera o estado JS: não desliga as transições CSS; o matchMedia é lido na inicialização sem listener de mudanças. O botão fica oculto no mobile. Sem WebGL há mensagem textual e navegação; falha ao carregar texturas da Terra não tem tratamento equivalente.
-
-### Limitações observadas, não canonizadas
-
-Créditos de viagem de 9px/8px no mobile, datas pequenas e a microlinha “HISTÓRIA DA ÁFRICA” sob a marca não viram padrões de tipografia para novas superfícies; a última é um eyebrow existente. A autoria e a data regional são informação, não kickers inventados. Não foram identificados ícones de glifo remanescentes: as setas do comparador são substituídas por SVG em runtime. O uso de Arial utilitária não equivale a fonte de sistema para display.
-
-As famílias tipográficas carregam arquivos locais sem descritores explícitos de peso/estilo, embora h1 peça 500. O retorno à abertura não limpa o conteúdo anterior da leitura, e `place-mode` persiste ao avançar marcos; isso é comportamento atual, não regra de experiência aprovada. O PRODUCT menciona filtros, modos e pausa que não aparecem como controles dedicados nesta implementação. Contraste sobre fotografias, estados de todas as alternativas e navegação completa não foram certificados por este passe documental. Revisão histórica de Mariana, divergência sobre assistência de IA registrada no PRODUCT e escolha definitiva seguem abertas. Nada disso foi reparado: o escopo autoriza somente estes dois documentos, e outro agente realiza a revisão.
+- **Gerado por IA para o site (não são documentos históricos):** a pintura da abertura (Nano Banana, Google Flow) e sua animação em loop (Veo, Google Flow); a mandala do final (Nano Banana, Google Flow); as animações da caravana (Maqamat de al-Hariri, 1237) e do Atlas Catalão (1375), feitas pelo Veo a partir das imagens originais. As originais, sem alteração, estão na lista de documentos.
+- **Desenhado em código:** a banda ornamental, as rosetas, a trama khatam, as dunas, a rete, o camelo e a rota no globo (esquemática, na ordem dos marcos).
+- **Terceiros:** texturas da Terra dos exemplos do Three.js; efeito de areia adaptado de "Sculpture Hero" (guglielmogiannattasio.it); Aref Ruqaa e Spectral sob SIL OFL.
 
 ## Do's and Don'ts
 
 ### Do:
-
-- Do manter autoria, créditos, distinção entre imagem contextual e evidência histórica e acesso à bibliografia.
-- Do preservar a navegação histórica em linha própria, a seleção atual e o comparador inicialmente oculto.
-- Do manter o mesmo caminho de navegação histórica para teclado e clique, incluindo a câmera de 850 ms quando o movimento completo está ativo.
-- Do respeitar movimento reduzido e preservar a leitura quando o 3D estiver indisponível.
+- **Do** colocar todo texto longo em papel de areia (paper-top → paper-bot) com a moldura de iluminura; sobre lápis, só títulos curtos, legendas e controles.
+- **Do** usar o ouro como metal: filetes de 1px, bandas, régua, medalhões e o botão principal.
+- **Do** manter um único botão gold por grupo de ações, para avançar; a ação secundária é quiet.
+- **Do** usar Aref Ruqaa só em títulos, datas, capitular e citação final; todo o resto em Spectral.
+- **Do** derivar todo recuo da banda da moldura (`calc(var(--band) + …)`), para que nada encoste no ornamento.
+- **Do** usar a curva cubic-bezier(.16, 1, .3, 1) com 200ms para estado, 450ms para troca de cena, e parar todo movimento contínuo com `prefers-reduced-motion`.
+- **Do** declarar nos créditos a origem de cada imagem nova (IA, código ou acervo) e manter a original na lista de documentos quando ela for animada.
 
 ### Don't:
-
-- Don't restaurar branco vazio ou verde/bege como paleta dominante; os tons naturais nas imagens continuam legítimos.
-- Don't apresentar fotografias atuais, dunas de IA ou rotas esquemáticas como reconstituições medievais.
-- Don't transformar a câmera histórica de 850 ms em duração padrão de controles ou criar movimento contínuo automático.
-- Don't declarar alternativa definitiva, aprovação acadêmica, comp ou seed que não foram realizados.
+- **Don't** criar uma segunda moldura ornamental dentro das cenas; a moldura de tapete é uma só e fica fixa.
+- **Don't** usar turquesa fora do ornamento desenhado em código.
+- **Don't** pintar texto de ouro sobre papel; no papel a hierarquia é sepia-900, sepia-700 e brown-500.
+- **Don't** usar sombra dura ou deslocada; profundidade é anel de iluminura mais sombra ambiente difusa.
+- **Don't** numerar marcos na linha do tempo; a régua grava datas.
+- **Don't** arredondar papéis ou botões além de 3px; círculo só para metal e cosmos.
+- **Don't** apresentar imagem gerada por IA como documento histórico.

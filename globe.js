@@ -133,7 +133,8 @@ export async function createGlobe(host) {
   rete.className = 'rete';
   rete.setAttribute('aria-hidden', 'true');
   rete.innerHTML = reteSVG();
-  host.prepend(rete);
+  // entre o globo (canvas) e os rótulos
+  host.insertBefore(rete, labelLayer);
 
   let current = -1, anim = null, drag = false, lastX = 0, lastY = 0, travelerAt = null, travelerDir = 1, iconSea = false;
   const setIcon = sea => { if (sea !== iconSea) { traveler.innerHTML = sea ? BOAT : CAMEL; iconSea = sea; } };

@@ -758,7 +758,7 @@ export function mountPainting(host, {src, source = null, alt = '', warps = [], i
   const image = source || new Image();
   const ready = () => {
     aspect = (image.naturalWidth || image.width) / (image.naturalHeight || image.height) || 1;
-    img.src = source ? source.toDataURL('image/jpeg', 0.85) : src;
+    img.src = source ? source.toDataURL('image/png') : src;
     layout();
     if (engine && host.dataset.gl !== 'off') {
       try {

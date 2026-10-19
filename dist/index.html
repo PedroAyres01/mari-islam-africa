@@ -9,11 +9,11 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./assets/fonts/aref-ruqaa-bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="./assets/fonts/spectral-regular.ttf" as="font" type="font/ttf" crossorigin>
-  <script type="module" crossorigin src="./assets/index-BpbPCVci.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Bqa6xcCT.css">
+  <script type="module" crossorigin src="./assets/index-DO58TROt.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CcGgXHlX.css">
 </head>
 <body>
-  <a class="skip" href="#referencias-lista">Ir para as referências</a>
+  <a class="skip" href="#conteudo">Ir para o conteúdo</a>
   <div class="site-frame" aria-hidden="true"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
   <header class="masthead">
     <button class="brand" id="go-home" type="button">O Islã à beira do deserto</button>
@@ -21,7 +21,7 @@
 
   <main>
     <section class="view view-intro is-active" id="abertura" aria-labelledby="intro-title">
-      <div class="kaaba-host" id="kaaba"></div>
+      <div class="kaaba-host" id="kaaba"><img class="cover-img" src="./assets/doc/abertura-meca.webp" alt="Pintura no estilo das miniaturas islâmicas: o pátio da Grande Mesquita de Meca ao amanhecer, com a Caaba ao centro, anéis de peregrinos de branco ao seu redor, pórticos, minaretes e nuvens douradas."></div>
       <div class="cartouche">
         <h1 id="intro-title"></h1>
         <p class="byline">Por Mariana Rodrigues Fernandes</p>
@@ -65,7 +65,6 @@
         </nav>
       </div>
       <article class="folio" id="folio" aria-labelledby="folio-title" hidden>
-        <div class="folio-band" aria-hidden="true"></div>
         <header class="folio-head">
           <h2 id="folio-title"></h2>
           <p class="marco-date" id="folio-date"></p>
@@ -95,7 +94,10 @@
             <h2 id="atlas-title"></h2>
             <p id="atlas-caption"></p>
           </div>
-          <button class="btn btn-gold" id="atlas-go" type="button">Continuar viagem</button>
+          <div class="scene-actions">
+            <button class="btn btn-quiet" id="atlas-replay" type="button" hidden>Ver de novo</button>
+            <button class="btn btn-gold" id="atlas-go" type="button">Continuar viagem</button>
+          </div>
         </div>
       </div>
     </section>
@@ -113,7 +115,6 @@
 
     <section class="view view-refs" id="referencias" aria-labelledby="refs-title" hidden>
       <div class="refs-page">
-        <div class="folio-band" aria-hidden="true"></div>
         <h2 id="refs-title">Referências</h2>
         <p class="refs-lede">Lista das referências bibliográficas usadas no percurso, com a indicação de onde cada uma foi utilizada.</p>
         <ol class="refs-list" id="referencias-lista"></ol>
