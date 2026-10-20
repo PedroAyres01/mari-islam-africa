@@ -56,18 +56,26 @@ $('#credits').innerHTML = `<p>Conteúdo histórico, textos, seleção de documen
 let current = -1, view = 'abertura', globe = null, caravanPainting = null, atlasPainting = null, dunesPainting = null;
 const views = ['abertura', 'caravana', 'viagem', 'atlas', 'fim', 'referencias'];
 
-function show(id, focusEl) {
+function show(id, focusEl, {instant = false} = {}) {
   if (id === view) return;
   const prev = $('#' + view), next = $('#' + id);
   next.hidden = false;
-  requestAnimationFrame(() => {
+  if (instant) {
+    // troca sem o fade padrão: a transição autoral cobre a passagem
+    for (const el of [prev, next]) el.style.transition = 'none';
+    next.classList.add('is-active');
+    prev.classList.remove('is-active');
+    prev.hidden = true;
+    requestAnimationFrame(() => { for (const el of [prev, next]) el.style.transition = ''; });
+    (focusEl || next.querySelector('h1, h2'))?.focus({preventScroll: true});
+  } else requestAnimationFrame(() => {
     next.classList.add('is-active');
     prev.classList.remove('is-active');
     // o foco só pode ir para a cena depois que ela fica visível
     (focusEl || next.querySelector('h1, h2'))?.focus({preventScroll: true});
   });
   const done = () => { prev.hidden = true; };
-  reduced ? done() : setTimeout(done, 450);
+  if (!instant) reduced ? done() : setTimeout(done, 450);
   view = id;
   document.body.dataset.view = id;
   next.scrollTop = 0;
@@ -118,14 +126,77 @@ function mountVideo(host, {src, poster, alt, loop = true, cover = false}) {
   return {destroy() { v.pause(); v.remove(); }, video: v};
 }
 
-async function openCaravan() {
-  show('caravana', $('#caravana-go'));
+function mountCaravan() {
   $('#caravana-art').innerHTML = '';
   $('#dunes').innerHTML = '';
   dunesPainting = mountPainting($('#dunes'), {source: paintDunes(1600, 1000), alt: '', fit: 'cover', intro: true, introMs: 2800, pointerTarget: $('#caravana')});
-  caravanPainting = (await hasVideo(caravan.video))
-    ? mountVideo($('#caravana-art'), {src: caravan.video, poster: caravan.poster, alt: caravan.alt})
-    : mountPainting($('#caravana-art'), {src: caravan.src, alt: caravan.alt, warps: caravanWarps, intro: false, interactive: false});
+  return hasVideo(caravan.video).then(ok => {
+    caravanPainting = ok
+      ? mountVideo($('#caravana-art'), {src: caravan.video, poster: caravan.poster, alt: caravan.alt})
+      : mountPainting($('#caravana-art'), {src: caravan.src, alt: caravan.alt, warps: caravanWarps, intro: false, interactive: false});
+  });
+}
+
+// O globo (Three.js e texturas) começa a carregar enquanto a caravana está na tela.
+let globeModule = null;
+function preloadGlobe() {
+  globeModule ||= import('./globe.js');
+  ['earth-color', 'earth-normal', 'earth-specular'].forEach(n => { const i = new Image(); i.src = `./assets/${n}.jpg`; });
+}
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const easeIn = 'cubic-bezier(.55, 0, .7, .2)', easeOut = 'cubic-bezier(.16, 1, .3, 1)';
+
+// Abertura → caravana: um vento de areia atravessa a tela e revela o deserto.
+async function openCaravan() {
+  preloadGlobe();
+  if (reduced) { show('caravana', $('#caravana-go')); return mountCaravan(); }
+  const veil = $('#sand-veil'), intro = $('#abertura');
+  intro.querySelector('.cartouche').animate([{opacity: 1, transform: 'translateY(-50%)'}, {opacity: 0, transform: 'translateY(calc(-50% - 16px))'}], {duration: 380, easing: easeIn, fill: 'forwards'});
+  intro.querySelector('.kaaba-host').animate([{transform: 'scale(1)', filter: 'blur(0) brightness(1)'}, {transform: 'scale(1.07)', filter: 'blur(5px) brightness(1.12)'}], {duration: 900, easing: easeIn, fill: 'forwards'});
+  veil.hidden = false;
+  await veil.animate([{transform: 'translateX(-100%)'}, {transform: 'translateX(0)'}], {duration: 760, delay: 140, easing: easeIn, fill: 'forwards'}).finished;
+  show('caravana', $('#caravana-go'), {instant: true});
+  intro.getAnimations({subtree: true}).forEach(a => a.cancel());
+  await Promise.race([mountCaravan(), wait(600)]);
+  await veil.animate([{transform: 'translateX(0)'}, {transform: 'translateX(100%)'}], {duration: 1000, easing: easeOut, fill: 'forwards'}).finished;
+  veil.getAnimations().forEach(a => a.cancel());
+  veil.hidden = true;
+}
+
+// Caravana → viagem: a miniatura se afasta e o globo se abre em círculo, como um astrolábio.
+async function openJourney() {
+  if (reduced) return goTo(0);
+  const from = $('#caravana'), to = $('#viagem'), ring = $('#iris-ring');
+  // o globo precisa de tamanho para nascer: a viagem entra na tela já recortada em círculo zero
+  to.hidden = false;
+  to.style.transition = 'none';
+  to.style.clipPath = 'circle(0% at 50% 50%)';
+  to.classList.add('is-active');
+  to.style.zIndex = 5;
+  const away = from.animate([{transform: 'scale(1)', opacity: 1, filter: 'blur(0)'}, {transform: 'scale(1.1)', opacity: 0, filter: 'blur(6px)'}], {duration: 900, easing: easeIn, fill: 'forwards'});
+  if (!globe) globe = await (await (globeModule || import('./globe.js'))).createGlobe($('#globe'));
+  renderMarco(0);
+  const g = $('#globe').getBoundingClientRect();
+  const cs = getComputedStyle($('#globe'));
+  const cx = g.left + g.width * (parseFloat(cs.getPropertyValue('--globe-cx')) || 0.5);
+  const cy = g.top + g.height * (parseFloat(cs.getPropertyValue('--globe-cy')) || 0.5);
+  const R = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+  Object.assign(ring.style, {left: `${cx - R}px`, top: `${cy - R}px`, width: `${2 * R}px`, height: `${2 * R}px`});
+  ring.hidden = false;
+  await away.finished.catch(() => {});
+  const dur = 1250;
+  ring.animate([{transform: 'scale(0)', opacity: 1}, {transform: 'scale(.85)', opacity: 1, offset: .8}, {transform: 'scale(1)', opacity: 0}], {duration: dur, easing: easeOut, fill: 'forwards'});
+  // em percentuais da tela: valores em px saíam fora de escala em telas de alta densidade
+  const px = (cx / innerWidth * 100).toFixed(2), py = (cy / innerHeight * 100).toFixed(2);
+  const rPct = (R / Math.sqrt((innerWidth ** 2 + innerHeight ** 2) / 2) * 100).toFixed(2);
+  await to.animate([{clipPath: `circle(0% at ${px}% ${py}%)`}, {clipPath: `circle(${rPct}% at ${px}% ${py}%)`}], {duration: dur, easing: easeOut, fill: 'forwards'}).finished;
+  to.getAnimations().forEach(a => a.cancel());
+  Object.assign(to.style, {clipPath: '', zIndex: '', transition: ''});
+  ring.hidden = true;
+  ring.getAnimations().forEach(a => a.cancel());
+  from.getAnimations().forEach(a => a.cancel());
+  show('viagem', $('#marco-title'), {instant: true});
 }
 
 // Atlas Catalão: a folha se aproxima de Mansa Musa; ele ergue a pepita de ouro e a entrega ao cavaleiro.
@@ -234,7 +305,7 @@ function advance() {
 }
 
 $('#start').onclick = openCaravan;
-$('#caravana-go').onclick = () => goTo(0);
+$('#caravana-go').onclick = openJourney;
 $('#atlas-go').onclick = () => goTo(8);
 $('#continue').onclick = advance;
 $('#folio-continue').onclick = advance;
